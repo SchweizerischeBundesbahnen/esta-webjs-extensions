@@ -12,6 +12,7 @@ script:
   - npm run lint
 deploy:
   provider: npm
+  email: esta@sbb.ch
   api_key: ${NPM_KEY}
   on:
 #    tags: true
