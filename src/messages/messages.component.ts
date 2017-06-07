@@ -7,7 +7,7 @@
  * @version: 2.0.0
  * @since 07.06.2017, 2017.
  */
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Message} from 'primeng/primeng';
 import {MessagesService} from './messages.service';
 import {MessageAction} from './model/message.actions';
@@ -19,6 +19,8 @@ import {MessageAction} from './model/message.actions';
 export class MessagesComponent {
 
     public messages: Array<Message> = [];
+    @Input() style: any;
+    @Input() styleClass: any;
 
     constructor(private messageService: MessagesService) {
         this.messageService.getMessageStream()
