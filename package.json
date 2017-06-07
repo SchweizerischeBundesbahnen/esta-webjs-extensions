@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
-    "publish": "lint && npm publish"
+    "lint": "tslint --type-check --project tsconfig.json src/**/*.ts"
   },
   "peerDependencies": {
     "@angular/core": "^4.1.0",
