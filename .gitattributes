@@ -1,0 +1,5 @@
+# Autodetect text files and perform LF normalization
+
+text=auto eol=lf
+
+

@@ -1,0 +1,19 @@
+dist: trusty
+sudo: required
+language: node_js
+
+node_js:
+  - "6"
+os:
+  - linux
+install:
+  - npm install
+script:
+  - npm run lint
+deploy:
+  provider: npm
+  api_key: ${NPM_KEY}
+  on:
+#    tags: true
+#    For testing:
+    all_branches: true
