@@ -11,18 +11,14 @@ import {Observable} from 'rxjs/Observable';
 import {Message} from 'primeng/primeng';
 import {Subject} from 'rxjs/Subject';
 import {Injectable} from '@angular/core';
-
-const MessageSeverities = {
-    SUCCESS: 'success',
-    INFO: 'info',
-    WARN: 'warn',
-    ERROR: 'error'
-};
+import {MessageSeverities} from './model/message.severities';
+import {EstaMessage} from './model/esta.message';
+import {MessageAction} from './model/message.actions';
 
 @Injectable()
 export class MessagesService {
 
-    private message$: Subject<Message> = new Subject<Message>();
+    private message$: Subject<EstaMessage> = new Subject<EstaMessage>();
 
     constructor() {
     }
@@ -45,10 +41,14 @@ export class MessagesService {
 
     private createMessage(severity: string, summary: string, detail: string): void {
         const message: Message = {severity, summary, detail};
-        this.message$.next(message);
+        this.message$.next({action: MessageAction.ADD, message});
     }
 
-    public getMessageStream(): Observable<Message> {
-        return this.message$;
+    public clearMessages(): void {
+        this.message$.next({action: MessageAction.CLEAR});
+    }
+
+    public getMessageStream(): Observable<EstaMessage> {
+        return this.message$.asObservable();
     }
 }

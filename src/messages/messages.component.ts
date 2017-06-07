@@ -10,6 +10,7 @@
 import {Component} from '@angular/core';
 import {Message} from 'primeng/primeng';
 import {MessagesService} from './messages.service';
+import {MessageAction} from './model/message.actions';
 
 @Component({
     selector: 'app-messages',
@@ -21,6 +22,12 @@ export class MessagesComponent {
 
     constructor(private messageService: MessagesService) {
         this.messageService.getMessageStream()
-            .subscribe(message => this.messages.push(message));
+            .subscribe(estaMessage => {
+                if (estaMessage.action === MessageAction.ADD) {
+                    this.messages.push(estaMessage.message);
+                } else {
+                    this.messages = [];
+                }
+            });
     }
 }

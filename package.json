@@ -1,8 +1,8 @@
 {
   "name": "esta-webjs-extensions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extension modules for ESTA WebJS",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts"
