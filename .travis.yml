@@ -15,6 +15,4 @@ deploy:
   email: esta@sbb.ch
   api_key: ${NPM_KEY}
   on:
-#    tags: true
-#    For testing:
-    all_branches: true
+    tags: true
