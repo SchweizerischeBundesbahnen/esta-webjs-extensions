@@ -12,13 +12,13 @@ import {Message} from 'primeng/primeng';
 import {Subject} from 'rxjs/Subject';
 import {Injectable} from '@angular/core';
 import {MessageSeverities} from './model/message.severities';
-import {EstaMessage} from './model/esta.message';
-import {MessageAction} from './model/message.actions';
+import {MessageActions} from './model/message.actions';
+import {MessageTypes} from './model/message.types';
 
 @Injectable()
 export class MessagesService {
 
-    private message$: Subject<EstaMessage> = new Subject<EstaMessage>();
+    private message$: Subject<MessageActions> = new Subject<MessageActions>();
 
     constructor() {
     }
@@ -41,14 +41,14 @@ export class MessagesService {
 
     private createMessage(severity: string, summary: string, detail: string): void {
         const message: Message = {severity, summary, detail};
-        this.message$.next({action: MessageAction.ADD, message});
+        this.message$.next({type: MessageTypes.ADD, message});
     }
 
     public clearMessages(): void {
-        this.message$.next({action: MessageAction.CLEAR});
+        this.message$.next({type: MessageTypes.CLEAR});
     }
 
-    public getMessageStream(): Observable<EstaMessage> {
+    public getMessageStream(): Observable<MessageActions> {
         return this.message$.asObservable();
     }
 }
