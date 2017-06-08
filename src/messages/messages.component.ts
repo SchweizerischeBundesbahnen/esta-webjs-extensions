@@ -17,6 +17,8 @@ import 'rxjs/add/operator/takeUntil';
 import {Observable} from 'rxjs/Observable';
 import {MessagesService} from './messages.service';
 
+const DEFAULT_LIFETIME = 0;
+
 @Component({
     selector: 'app-messages',
     templateUrl: './messages.component.html'
@@ -26,22 +28,23 @@ export class MessagesComponent {
     public messages: Array<Message> = [];
     @Input() style: any;
     @Input() styleClass: any;
-    @Input() life = 0;
+    @Input() life = DEFAULT_LIFETIME;
 
     constructor(private messageService: MessagesService) {
-        this.createStream();
+        this.subscribeForMessages();
     }
 
-    private createStream() {
+    private subscribeForMessages() {
         this.messages = [];
         this.messageService.getMessageStream()
             .do(message => this.messages.push(message))
-            .mergeMap(message => this.life > 0 ? Observable.timer(this.life) : Observable.empty())
+            .mergeMap(message => this.life > DEFAULT_LIFETIME ?
+                Observable.timer(this.life) : Observable.empty())
             .takeUntil(this.messageService.getCancelStream())
             .subscribe(
                 e => this.messages.shift(),
                 err => console.error(err),
-                () => this.createStream()
+                () => this.subscribeForMessages()
             );
     }
 }
