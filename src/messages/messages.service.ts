@@ -13,12 +13,12 @@ import {Subject} from 'rxjs/Subject';
 import {Injectable} from '@angular/core';
 import {MessageSeverities} from './model/message.severities';
 import {MessageActions} from './model/message.actions';
-import {MessageTypes} from './model/message.types';
 
 @Injectable()
 export class MessagesService {
 
-    private message$: Subject<MessageActions> = new Subject<MessageActions>();
+    private message$: Subject<Message> = new Subject<Message>();
+    private cancel$: Subject<boolean> = new Subject<boolean>();
 
     constructor() {
     }
@@ -41,14 +41,18 @@ export class MessagesService {
 
     private createMessage(severity: string, summary: string, detail: string): void {
         const message: Message = {severity, summary, detail};
-        this.message$.next({type: MessageTypes.ADD, message});
+        this.message$.next(message);
     }
 
     public clearMessages(): void {
-        this.message$.next({type: MessageTypes.CLEAR});
+        this.cancel$.next(true);
     }
 
     public getMessageStream(): Observable<MessageActions> {
         return this.message$.asObservable();
+    }
+
+    public getCancelStream(): Observable<boolean> {
+        return this.cancel$.asObservable();
     }
 }

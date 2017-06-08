@@ -13,9 +13,9 @@ import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/takeUntil';
 import {Observable} from 'rxjs/Observable';
 import {MessagesService} from './messages.service';
-import {MessageTypes} from './model/message.types';
 
 @Component({
     selector: 'app-messages',
@@ -29,28 +29,19 @@ export class MessagesComponent {
     @Input() life = 0;
 
     constructor(private messageService: MessagesService) {
-        this.messageService.getMessageStream()
-            .do(messageAction => {
-                if (messageAction.type === MessageTypes.ADD) {
-                    this.addMessage(messageAction.message);
-                } else {
-                    this.resetMessages();
-                }
-            })
-            .mergeMap(messageAction => {
-                if (this.life === 0 && messageAction.type === MessageTypes.CLEAR) {
-                    return Observable.empty();
-                }
-                return Observable.timer(this.life);
-            })
-            .subscribe(_ => this.messages.shift());
+        this.createStream();
     }
 
-    private addMessage(message: Message): void {
-        this.messages.push(message);
-    }
-
-    private resetMessages(): void {
+    private createStream() {
         this.messages = [];
+        this.messageService.getMessageStream()
+            .do(message => this.messages.push(message))
+            .mergeMap(message => this.life > 0 ? Observable.timer(this.life) : Observable.empty())
+            .takeUntil(this.messageService.getCancelStream())
+            .subscribe(
+                e => this.messages.shift(),
+                err => console.error(err),
+                () => this.createStream()
+            );
     }
 }
