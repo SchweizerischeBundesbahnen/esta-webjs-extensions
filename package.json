@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
+    "report-coverage": "cat ./coverage/coverage.json | codecov",
     "test": "karma start"
   },
   "peerDependencies": {
@@ -30,6 +31,7 @@
     "@types/jasmine": "2.5.45",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "~3.1.2",
+    "codecov": "^2.2.0",
     "codelyzer": "~2.0.0",
     "html-webpack-plugin": "^2.28.0",
     "jasmine-core": "^2.6.3",
