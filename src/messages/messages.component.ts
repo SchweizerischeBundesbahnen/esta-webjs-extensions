@@ -34,7 +34,7 @@ export class MessagesComponent {
         this.subscribeForMessages();
     }
 
-    private subscribeForMessages() {
+    subscribeForMessages() {
         this.messages = [];
         this.messageService.getMessageStream()
             .do(message => this.messages.push(message))
