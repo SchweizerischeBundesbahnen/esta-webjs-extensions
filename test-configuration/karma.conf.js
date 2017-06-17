@@ -34,7 +34,7 @@ module.exports = function (config) {
          * we are building the test environment in ./spec-bundle.js
          */
         files: [
-            {pattern: './test/spec-bundle.js', watched: false},
+            {pattern: './test-configuration/spec-bundle.js', watched: false},
         ],
 
         /**
@@ -48,10 +48,10 @@ module.exports = function (config) {
          * Preprocess matching files before serving them to the browser
          * available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
          */
-        preprocessors: {'./test/spec-bundle.js': ['coverage', 'webpack', 'sourcemap']},
+        preprocessors: {'./test-configuration/spec-bundle.js': ['coverage', 'webpack', 'sourcemap']},
 
         webpackPreprocessor: {
-            configPath: './test/webpack.config.js'
+            configPath: './test-configuration/webpack.config.js'
         },
         /**
          * Webpack Config at ./webpack.test.js
