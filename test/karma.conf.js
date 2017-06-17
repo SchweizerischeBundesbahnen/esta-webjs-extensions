@@ -140,9 +140,13 @@ module.exports = function (config) {
     };
 
     if (process.env.TRAVIS) {
+        console.log('With travis')
         configuration.browsers = [
             'ChromeTravisCi'
         ];
+    }
+    else {
+        console.log('Without travis')
     }
 
     config.set(configuration);

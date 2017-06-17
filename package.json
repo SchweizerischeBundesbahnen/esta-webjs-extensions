@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
     "report-coverage": "cat ./coverage/coverage.json | codecov",
-    "test": "karma start"
+    "test": "TRAVIS=true karma start"
   },
   "peerDependencies": {
     "@angular/core": "^4.2.2",
