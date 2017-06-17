@@ -38,13 +38,25 @@ export class MessagesComponent {
         this.messages = [];
         this.messageService.getMessageStream()
             .do(message => this.messages.push(message))
-            .mergeMap(message => this.life > DEFAULT_LIFETIME ?
-                Observable.timer(this.life) : Observable.empty())
+            .mergeMap(message => this.getLifeTimeStream())
             .takeUntil(this.messageService.getCancelStream())
             .subscribe(
-                e => this.messages.shift(),
-                err => console.error(err),
+                e => this.removeFirstMessage(),
+                err => {
+                    throw err;
+                },
                 () => this.subscribeForMessages()
             );
+    }
+
+    removeFirstMessage() {
+        this.messages.shift();
+    }
+
+    getLifeTimeStream(): Observable<any> {
+        if (this.life > DEFAULT_LIFETIME) {
+            return Observable.timer(this.life);
+        }
+        return Observable.empty();
     }
 }
