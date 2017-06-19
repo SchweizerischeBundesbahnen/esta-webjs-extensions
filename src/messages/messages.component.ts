@@ -7,7 +7,7 @@
  * @version: 2.0.0
  * @since 07.06.2017, 2017.
  */
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Message} from 'primeng/primeng';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/timer';
@@ -29,12 +29,13 @@ export class MessagesComponent {
     @Input() style: any;
     @Input() styleClass: any;
     @Input() life = DEFAULT_LIFETIME;
+    @Output() onClose = new EventEmitter<any>();
 
     constructor(private messageService: MessagesService) {
         this.subscribeForMessages();
     }
 
-    subscribeForMessages() {
+    public subscribeForMessages() {
         this.messages = [];
         this.messageService.getMessageStream()
             .do(message => this.messages.push(message))
@@ -49,14 +50,18 @@ export class MessagesComponent {
             );
     }
 
-    removeFirstMessage() {
+    public removeFirstMessage() {
         this.messages.shift();
     }
 
-    getLifeTimeStream(): Observable<any> {
+    public getLifeTimeStream(): Observable<any> {
         if (this.life > DEFAULT_LIFETIME) {
             return Observable.timer(this.life);
         }
         return Observable.empty();
+    }
+
+    public messageClosed($event) {
+        this.onClose.next($event);
     }
 }

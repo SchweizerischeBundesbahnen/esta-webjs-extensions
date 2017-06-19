@@ -166,5 +166,17 @@ describe('Message Component', () => {
                 // when then
                 expect(() => component.subscribeForMessages()).toThrowError(errorMessage);
             }));
+
+        it('should emit a the onClosed event when a message is closed', () => {
+            // given
+            spyOn(component.onClose, 'next');
+            const $event = {
+                message: 'Awesome Message'
+            };
+            // when
+            component.messageClosed($event);
+            // then
+            expect(component.onClose.next).toHaveBeenCalledWith($event);
+        });
     });
 });
