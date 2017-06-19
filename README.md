@@ -96,10 +96,10 @@ export class SampleComponent{
 Der Messages Service stellt folgende Methoden zur Erstellung von Messages bereit.
 Jede Methode nimmt den Inhalt der Message sowie einen Titel entgegen.
 
-- createSuccessMessage(messageContent: string, summary: string)
-- createInfoMessage(messageContent: string, summary: string)
-- createWarningMessage(messageContent: string, summary: string)
-- createErrorMessage(messageContent: string, summary: string)
+- createSuccessMessage(messageContent: string, summary: string): void
+- createInfoMessage(messageContent: string, summary: string): void
+- createWarningMessage(messageContent: string, summary: string): void
+- createErrorMessage(messageContent: string, summary: string): void
 
 Um sämtliche Nachrichten zu löschen kann die Methode **clearMessages()** vom MessageService aufgerufen werden.
 
