@@ -1,15 +1,14 @@
-# MessagesService
+# Messages Modul
 
-Beim MessagesService handelt es sich um einen Wrapper um das Growl Modul
-von PrimeNG. Leider bietet das von PrimeNG bereitgestellte Growl Modul
-keine Möglichkeit eines zentralen Services welcher sich um die Verwaltung
-der Messages kümmert. Weiter werden die non sticky Growl Messages bei PrimeNg
-nicht schön nacheinander entfernt sondern alle gleichzeitig. Der MessageService
+Beim MessagesModul handelt es sich um einen Wrapper um das Growl Modul
+von PrimeNG. Das von PrimeNG bereitgestellte Growl Modul bietet leider
+keine Möglichkeit Messages über einen zentralen Service zu erstellen. Bei PrimeNG
+sind die Messages stark an die Komponente gekoppelt. Weiter werden die non sticky Growl Messages bei PrimeNg
+nicht schön nacheinander entfernt sondern alle gleichzeitig. Der ESTA-MessageService
 bietet diese Funktionalität an.
 
-## Wie verwendet man das ESTA-Messages?
-
-### Getting Started
+## Wie verwendet man das ESTA-Messages Modul?
+### Installation
 Das MessageModul ist Teil der Esta-Webjs-extensions. Diese sind auf npm
 gehostet und können daher über folgenden Command installiert werden:
 
@@ -18,6 +17,20 @@ npm install --save esta-webjs-extensions
 ```
 
 ### Verwendung
+Um den MessageService sowie die Message Component zu verwenden muss zuerst das
+MessageModul aus esta-webjs-extensions in die Applikation importiert werden.
+z.B im app.module.ts:
+
+```javascript
+import {MessagesModule} from 'esta-webjs-extensions';
+
+@NgModule({
+    declarations: [AppComponent],
+    imports: [MessagesModul]
+})
+...
+```
+
 
 #### Message Komponente
 
