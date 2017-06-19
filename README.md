@@ -5,11 +5,10 @@
 - [Messages Modul](#messages-modul)
   - [Wie verwendet man das ESTA-Messages Modul?](#wie-verwendet-man-das-esta-messages-modul)
     - [Installation](#installation)
-    - [Verwendung](#verwendung)
-      - [Message Komponente](#message-komponente)
-        - [Input](#input)
-        - [Output](#output)
-      - [MessageService](#messageservice)
+    - [Message Komponente](#message-komponente)
+      - [Input](#input)
+      - [Output](#output)
+    - [MessageService](#messageservice)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -31,7 +30,6 @@ gehostet und können daher über folgenden Command installiert werden:
 npm install --save esta-webjs-extensions
 ```
 
-### Verwendung
 Um den MessageService sowie die Message Component zu verwenden muss zuerst das
 MessageModul aus esta-webjs-extensions in die Applikation importiert werden.
 z.B im app.module.ts:
@@ -47,7 +45,7 @@ import {MessagesModule} from 'esta-webjs-extensions';
 ```
 
 
-#### Message Komponente
+### Message Komponente
 
 Das ESTA Message Modul stellt eine Komponente namens: esta-messages bereit.
 Diese Komponente kann zentral in die Applikation eingebunden werden.
@@ -62,7 +60,7 @@ z.B in app.component.html.
 
 Die Komponente esta-messages verfügt über folgende Inputs und Outputs:
 
-##### Input
+#### Input
 - **style:** Inline Styles für die Growl Komponente von PrimeNG
 - **styleClass:** Style Klasse für die Growl Komponente von PrimeNG
 - **life:** Integer in Milisekunden wie lange jede einzelne Message erscheinen
@@ -71,11 +69,11 @@ Die Komponente esta-messages verfügt über folgende Inputs und Outputs:
   beim Aufruf der Clear Methode des Messageservices oder wenn der User diese über
   das x löscht.
 
-##### Output
+#### Output
 - **onClose** Wirft ein Event welches die soeben geschlossene Message
     beinhaltet
 
-#### MessageService
+### MessageService
 Der MessageService bietet die Möglichkeit Messages zu erstellen und zu löschen.
 Der MessageService kann in jeder beliebigen Komponente injected werden.
 
