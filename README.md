@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Messages Modul](#messages-modul)
+  - [Wie verwendet man das ESTA-Messages Modul?](#wie-verwendet-man-das-esta-messages-modul)
+    - [Installation](#installation)
+    - [Verwendung](#verwendung)
+      - [Message Komponente](#message-komponente)
+        - [Input](#input)
+        - [Output](#output)
+      - [MessageService](#messageservice)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Messages Modul
 
 Beim MessagesModul handelt es sich um einen Wrapper um das Growl Modul
