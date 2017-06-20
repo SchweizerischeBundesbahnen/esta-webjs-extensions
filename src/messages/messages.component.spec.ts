@@ -20,14 +20,6 @@ describe('Message Component', () => {
     let component: MessagesComponent;
     let fixture: ComponentFixture<MessagesComponent>;
 
-    class MockMessagesService {
-        public getMessageStream() {
-        }
-
-        public getCancelStream() {
-        }
-    }
-
     beforeEach(async () => {
         TestBed.configureTestingModule({
             imports: [GrowlModule],
