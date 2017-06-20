@@ -20,7 +20,7 @@ import {MessagesService} from './messages.service';
 const DEFAULT_LIFETIME = 0;
 
 @Component({
-    selector: 'app-messages',
+    selector: 'esta-messages',
     templateUrl: './messages.component.html'
 })
 export class MessagesComponent {
