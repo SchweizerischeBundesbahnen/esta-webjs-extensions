@@ -41,7 +41,7 @@ export class MessagesComponent {
         this.messages = [];
         this.messageService.getMessageStream()
             .do(message => this.messages.push(message))
-            .mergeMap(message => this.getLifeTimeStream(message))
+            .mergeMap(message => this.getLifeTimeStream(message.id))
             .takeUntil(this.messageService.getCancelStream())
             .subscribe(
                 messageId => this.removeMessage(messageId),
@@ -59,10 +59,10 @@ export class MessagesComponent {
         }
     }
 
-    public getLifeTimeStream(message: EstaMessage): Observable<any> {
+    public getLifeTimeStream(messageId: string): Observable<any> {
         if (this.life > DEFAULT_LIFETIME) {
             return Observable.timer(this.life)
-                .mapTo(message.id);
+                .mapTo(messageId);
         }
         return Observable.empty();
     }

@@ -14,6 +14,7 @@ import {MessagesService} from './messages.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/never';
 import 'rxjs/add/observable/of';
+import {EstaMessage} from './estaMessages.model';
 
 describe('Message Component', () => {
 
@@ -36,8 +37,8 @@ describe('Message Component', () => {
 
     describe('Subscribe for messages', () => {
 
-        const createMessage = (severity: string, summary: string, detail: string) => (
-            {severity, summary, detail}
+        const createMessage = (id: string, severity: string, summary: string, detail: string): EstaMessage => (
+            {id, severity, summary, detail}
         );
 
         it(`should add all arriving messages and not emit a new value which indicates that 
@@ -45,9 +46,9 @@ describe('Message Component', () => {
             inject([MessagesService], (messagesService: MessagesService) => {
                 // given
                 const expectedMessages: Array<Message> = [
-                    createMessage('success', 'awesome message', 'awesome detail'),
-                    createMessage('wanring', 'awesome message', 'awesome detail'),
-                    createMessage('error', 'awesome message', 'awesome detail')
+                    createMessage('1', 'success', 'awesome message', 'awesome detail'),
+                    createMessage('2', 'wanring', 'awesome message', 'awesome detail'),
+                    createMessage('3', 'error', 'awesome message', 'awesome detail')
                 ];
                 const messages$ = Observable.create(observer => {
                     expectedMessages.forEach(message => {
@@ -65,29 +66,33 @@ describe('Message Component', () => {
         it('should return an empty observable when no lifetime is set', () => {
             // given
             spyOn(Observable, 'empty');
+            const messageId = '123456789';
             // when
-            component.getLifeTimeStream();
+            component.getLifeTimeStream(messageId);
             // then
             expect(Observable.empty).toHaveBeenCalled();
         });
 
-        it('should return an observable that emits a value in after the lifetime has passed', () => {
+        it('should return an observable that emits the messageId after the lifetime has passed', () => {
             // given
-            spyOn(Observable, 'timer');
+            spyOn(Observable, 'timer').and.returnValue(Observable.of(1));
+            spyOn(Observable.prototype, 'mapTo');
             component.life = 3000;
+            const messageId = '12345678';
             // when
-            component.getLifeTimeStream();
+            component.getLifeTimeStream(messageId);
             // then
             expect(Observable.timer).toHaveBeenCalledWith(3000);
+            expect(Observable.prototype.mapTo).toHaveBeenCalledWith(messageId);
         });
 
-        it('it should call unshift in subscribe when a message is cleared',
+        it('it should call removeMessage in subscribe when a message is cleared',
             inject([MessagesService], (messagesService: MessagesService) => {
                 // given
                 const expectedMessages: Array<Message> = [
-                    createMessage('success', 'awesome message', 'awesome detail'),
-                    createMessage('wanring', 'awesome message', 'awesome detail'),
-                    createMessage('error', 'awesome message', 'awesome detail')
+                    createMessage('1', 'success', 'awesome message', 'awesome detail'),
+                    createMessage('2', 'wanring', 'awesome message', 'awesome detail'),
+                    createMessage('3', 'error', 'awesome message', 'awesome detail')
                 ];
                 const messages$ = Observable.create(observer => {
                     expectedMessages.forEach(message => {
@@ -96,11 +101,11 @@ describe('Message Component', () => {
                 });
                 spyOn(messagesService, 'getMessageStream').and.returnValue(messages$);
                 spyOn(component, 'getLifeTimeStream').and.returnValue(Observable.of(1));
-                spyOn(Array.prototype, 'shift');
+                spyOn(component, 'removeMessage');
                 // when
                 component.subscribeForMessages();
                 // then
-                expect(Array.prototype.shift).toHaveBeenCalledTimes(3);
+                expect(component.removeMessage).toHaveBeenCalledTimes(3);
             })
         );
 
@@ -110,9 +115,9 @@ describe('Message Component', () => {
                 // given
                 let numberOfCalls = 0;
                 const expectedMessages = [
-                    createMessage('success', 'awesome message', 'awesome detail'),
-                    createMessage('wanring', 'awesome message', 'awesome detail'),
-                    createMessage('error', 'awesome message', 'awesome detail')
+                    createMessage('1', 'success', 'awesome message', 'awesome detail'),
+                    createMessage('2', 'wanring', 'awesome message', 'awesome detail'),
+                    createMessage('3', 'error', 'awesome message', 'awesome detail')
                 ];
                 const messages$ = Observable.create(observer => {
                     expectedMessages.forEach(message => {
@@ -136,16 +141,30 @@ describe('Message Component', () => {
                 expect(component.subscribeForMessages).toHaveBeenCalledTimes(2);
             }));
 
-        it('should remove the first message', () => {
+        it('should remove the message with the matching messageId', () => {
             // given
-            const message1 = createMessage('success', 'awesome message', 'awesome detail');
-            const message2 = createMessage('wanring', 'awesome message', 'awesome detail');
-            const message3 = createMessage('error', 'awesome message', 'awesome detail');
+            const messageId = '1';
+            const message1 = createMessage('1', 'success', 'awesome message', 'awesome detail');
+            const message2 = createMessage('2', 'wanring', 'awesome message', 'awesome detail');
+            const message3 = createMessage('3', 'error', 'awesome message', 'awesome detail');
             component.messages = [message1, message2, message3];
             // when
-            component.removeFirstMessage();
+            component.removeMessage(messageId);
             // then
             expect(component.messages).toEqual([message2, message3]);
+        });
+
+        it('should not remove a message when no matching Id was found', () => {
+            // given
+            const messageId = '4';
+            const message1 = createMessage('1', 'success', 'awesome message', 'awesome detail');
+            const message2 = createMessage('2', 'wanring', 'awesome message', 'awesome detail');
+            const message3 = createMessage('3', 'error', 'awesome message', 'awesome detail');
+            component.messages = [message1, message2, message3];
+            // when
+            component.removeMessage(messageId);
+            // then
+            expect(component.messages).toEqual([message1, message2, message3]);
         });
 
         it('should throw an error when an error occures',
