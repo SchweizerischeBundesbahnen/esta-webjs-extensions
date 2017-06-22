@@ -10,7 +10,7 @@
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {Injectable} from '@angular/core';
-import {EstaMessage} from './estaMessages.model';
+import {EstaMessage} from './estaMessage.model';
 import {UUID} from 'angular2-uuid';
 
 const MessageSeverities = {

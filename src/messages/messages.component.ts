@@ -8,7 +8,6 @@
  * @since 07.06.2017, 2017.
  */
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Message} from 'primeng/primeng';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/do';
@@ -16,7 +15,7 @@ import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
 import {Observable} from 'rxjs/Observable';
-import {EstaMessage} from './estaMessages.model';
+import {EstaMessage} from './estaMessage.model';
 import {MessagesService} from './messages.service';
 
 const DEFAULT_LIFETIME = 0;
@@ -27,7 +26,7 @@ const DEFAULT_LIFETIME = 0;
 })
 export class MessagesComponent {
 
-    public messages: Array<Message> = [];
+    public messages: Array<EstaMessage> = [];
     @Input() style: any;
     @Input() styleClass: any;
     @Input() life = DEFAULT_LIFETIME;
@@ -54,7 +53,7 @@ export class MessagesComponent {
 
     public removeMessage(messageId: string) {
         const index = this.messages.findIndex(message => message.id === messageId);
-        if(index >= 0) {
+        if (index >= 0) {
             this.messages.splice(index, 1);
         }
     }

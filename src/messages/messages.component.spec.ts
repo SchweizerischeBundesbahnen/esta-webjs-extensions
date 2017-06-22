@@ -14,7 +14,7 @@ import {MessagesService} from './messages.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/never';
 import 'rxjs/add/observable/of';
-import {EstaMessage} from './estaMessages.model';
+import {EstaMessage} from './estaMessage.model';
 
 describe('Message Component', () => {
 
