@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
+import {UUID} from 'angular2-uuid';
 import {GrowlModule} from 'primeng/primeng';
 import {MessagesService} from './messages.service';
-import {UUID} from "angular2-uuid";
 
 describe('Message Service', () => {
 
