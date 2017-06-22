@@ -46,6 +46,7 @@ export class MessagesService {
     }
 
     private createMessage(severity: string, summary: string, detail: string): void {
+        console.log(UUID.UUID());
         this.message$.next({id: UUID.UUID(), severity, summary, detail});
     }
 
