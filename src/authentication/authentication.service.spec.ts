@@ -168,4 +168,68 @@ describe('Authentication Service', () => {
                 done();
             });
     });
+
+    it(`should return an Observable that streams the userprofile`, () => {
+        // given
+        const sut = new EstaAuthService();
+        const userprofile = {
+            firstname: 'Ruffy',
+            name: 'Monkey D'
+        };
+        EstaAuthService.userProfile.next(userprofile);
+        spyOn(sut, 'authenticated').and.returnValue(false);
+        // when
+        const userprofile$ = sut.getUserInfo();
+        // then
+        userprofile$.subscribe(
+            profile => expect(profile).toEqual(userprofile)
+        );
+    });
+
+    it(`should load the userprofile if the user is authenticated and Keycloak has no profile yet.
+    It should then stream the loaded profile`, () => {
+        // given
+        const sut = new EstaAuthService();
+        const userprofile = {
+            firstname: 'Ruffy',
+            name: 'Monkey D'
+        };
+        EstaAuthService.keycloak = {
+            profile: false,
+            loadUserProfile: () => ({
+                success: callback => {
+                    callback(userprofile);
+                    return {
+                        error: () => {
+                        }
+                    };
+                }
+            })
+        };
+        spyOn(sut, 'authenticated').and.returnValue(true);
+        // when
+        const userprofile$ = sut.getUserInfo();
+        // then
+        userprofile$.subscribe(
+            profile => expect(profile).toEqual(userprofile)
+        );
+    });
+
+    it(`should load the userprofile if the user is authenticated and Keycloak has no profile yet.
+    It should then stream an error if an error occured during the loading of the profile`, () => {
+        // given
+        const sut = new EstaAuthService();
+        const errorMessage = 'An error occured while loading the profile';
+        EstaAuthService.keycloak = {
+            profile: false,
+            loadUserProfile: () => ({
+                success: () => ({
+                    error: errorCallback => errorCallback(errorMessage)
+                })
+            })
+        };
+        spyOn(sut, 'authenticated').and.returnValue(true);
+        // when - then
+        expect(() => sut.getUserInfo()).toThrowError(errorMessage);
+    });
 });

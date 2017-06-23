@@ -74,9 +74,10 @@ export class EstaAuthService {
                 .success(profile => {
                     EstaAuthService.userProfile.next(profile);
                 })
-                .error(err => EstaAuthService.userProfile.error(err));
+                .error(err => {
+                    throw new Error(err);
+                });
         }
-
         return EstaAuthService.userProfile.asObservable();
     }
 }
