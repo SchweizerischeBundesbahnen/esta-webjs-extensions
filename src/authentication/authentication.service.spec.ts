@@ -49,7 +49,6 @@ describe('Authentication Service', () => {
         promise.then(
             () => fail(),
             err => {
-                console.log('Hier', err);
                 expect(err).toBe(errorMessage);
                 done();
             }
