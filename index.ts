@@ -1,3 +1,3 @@
-export * from './src/messages/messages.module'
-export * from './src/messages/messages.service'
+export * from './src/authentication/authentication.module'
+export * from './src/authentication/authentication.service'
 
