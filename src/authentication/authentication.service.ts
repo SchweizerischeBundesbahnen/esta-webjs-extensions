@@ -26,7 +26,6 @@ export class EstaAuthService {
         return new Promise((resolve, reject) => {
             EstaAuthService.keycloak.init(options)
                 .success(() => {
-                    console.log('Resolved');
                     resolve();
                 })
                 .error((errorData: any) => {
@@ -35,7 +34,7 @@ export class EstaAuthService {
         });
     }
 
-    static createKeycloak(configUrl){
+    static createKeycloak(configUrl) {
         return new Keycloak(configUrl);
     }
 
