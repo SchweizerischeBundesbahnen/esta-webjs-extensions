@@ -53,7 +53,7 @@ export class EstaAuthService {
     public refreshToken(minValidity: number): Promise<boolean> {
         return new Promise((resolve, reject) => {
             EstaAuthService.keycloak.updateToken(minValidity)
-                .success(() => resolve())
+                .success(() => resolve(true))
                 .error((err) => reject(err));
         });
     }

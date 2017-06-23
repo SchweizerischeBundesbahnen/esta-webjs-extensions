@@ -122,4 +122,50 @@ describe('Authentication Service', () => {
         });
     });
 
+    it(`should return a promise when we call refreshToken. This promise must be 
+        resolved when the refresh was successfull`, done => {
+        // given
+        const sut = new EstaAuthService();
+        const minValidity = 5;
+        const keyCloakMock = {
+            updateToken: () => ({
+                success: callback => callback()
+            })
+        };
+        EstaAuthService.keycloak = keyCloakMock;
+        // when
+        const promise = sut.refreshToken(minValidity);
+        // then
+        promise.then(refreshed => {
+                expect(refreshed).toBeTruthy();
+                done();
+            },
+            err => fail('Promise was not resolved')
+        );
+    });
+
+    it(`should return a promise when we call refreshToken. This promise must be 
+        rejected when an error during refresh occured`, done => {
+        // given
+        const sut = new EstaAuthService();
+        const minValidity = 5;
+        const errorMessage = 'The refresh of the token failed';
+        const keyCloakMock = {
+            updateToken: () => ({
+                success: () => ({
+                    error: callback => callback(errorMessage)
+                })
+            })
+        };
+        EstaAuthService.keycloak = keyCloakMock;
+        // when
+        const promise = sut.refreshToken(minValidity);
+        // then
+        promise.then(
+            () => fail(),
+            err => {
+                expect(err).toBe(errorMessage);
+                done();
+            });
+    });
 });
