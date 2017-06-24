@@ -1,105 +1,45 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+# Esta Web JS Exstentions
+This projects contains all extensions for the Webstack Esta WebJS 2.
+Currently we offer the following extensions:
+- Authentication Module
 
-- [Messages Modul](#messages-modul)
-  - [Wie verwendet man das ESTA-Messages Modul?](#wie-verwendet-man-das-esta-messages-modul)
-    - [Installation](#installation)
-    - [Message Komponente](#message-komponente)
-      - [Input](#input)
-      - [Output](#output)
-    - [MessageService](#messageservice)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Messages Modul
-
-Beim MessagesModul handelt es sich um einen Wrapper um das Growl Modul
-von PrimeNG. Das von PrimeNG bereitgestellte Growl Modul bietet leider
-keine Möglichkeit Messages über einen zentralen Service zu erstellen. Bei PrimeNG
-sind die Messages stark an die Komponente gekoppelt. Weiter werden die non sticky Growl Messages bei PrimeNg
-nicht schön nacheinander entfernt sondern alle gleichzeitig. Der ESTA-MessageService
-bietet diese Funktionalität an.
-
-## Wie verwendet man das ESTA-Messages Modul?
-### Installation
-Das MessageModul ist Teil der Esta-Webjs-extensions. Diese sind auf npm
-gehostet und können daher über folgenden Command installiert werden:
+## Getting started
+To use the esta-webjs-extensions you need to have node and npm installed.
+You can then install esta webjs extensions with the following command:
 
 ```
 npm install --save esta-webjs-extensions
 ```
 
-Um den MessageService sowie die Message Component zu verwenden muss zuerst das
-MessageModul aus esta-webjs-extensions in die Applikation importiert werden.
-z.B im app.module.ts:
+## Authentication Module
 
-```javascript
-import {MessagesModule} from 'esta-webjs-extensions';
+The authentication module provides functionality for SSO Sign in
+with Keycloak at SBB. It provides you an authentication service that you
+can use to handle all your authentication tasks.
 
-@NgModule({
-    declarations: [AppComponent],
-    imports: [MessagesModul]
-})
-...
+### How to use the authentication module
+After you have installed the esta-webjs-extensions package you can import
+the authentication module inside your angular 2 application like follows:
+
+```
+TODO
 ```
 
-
-### Message Komponente
-
-Das ESTA Message Modul stellt eine Komponente namens: esta-messages bereit.
-Diese Komponente kann zentral in die Applikation eingebunden werden.
-z.B in app.component.html.
-```html
-<app-navbar></app-navbar>
-<esta-messages></esta-messages>
-<div class="container">
-    <router-outlet></router-outlet>
-</div>
+Inside your component you can then use the service in the following way:
+```
+TODO
 ```
 
-Die Komponente esta-messages verfügt über folgende Inputs und Outputs:
+### Authentication Service
+The Authentication Service provides the nescessary API to interact with
+the authentication module.
 
-#### Input
-- **style:** Inline Styles für die Growl Komponente von PrimeNG
-- **styleClass:** Style Klasse für die Growl Komponente von PrimeNG
-- **life:** Integer in Milisekunden wie lange jede einzelne Message erscheinen
-  soll. Bei der Eingabe von 3000 verschwindet jede erstellte Message nach
-  3 Sekunden. Falls nichts angegeben wird verschwinden die Messages erst
-  beim Aufruf der Clear Methode des Messageservices oder wenn der User diese über
-  das x löscht.
-
-#### Output
-- **onClose** Wirft ein Event welches die soeben geschlossene Message
-    beinhaltet
-
-### MessageService
-Der MessageService bietet die Möglichkeit Messages zu erstellen und zu löschen.
-Der MessageService kann in jeder beliebigen Komponente injected werden.
-
-```javascript
-import {MessagesService} from 'esta-webjs-extensions';
-
-@Component({
-    selector: ...,
-    templateUrl: ...
-})
-export class SampleComponent{
-
-    constructor(private messagesService: MessagesService){
-    }
-}
-```
-
-Der Messages Service stellt folgende Methoden zur Erstellung von Messages bereit.
-Jede Methode nimmt den Inhalt der Message sowie einen Titel entgegen.
-
-- createSuccessMessage(messageContent: string, summary: string): void
-- createInfoMessage(messageContent: string, summary: string): void
-- createWarningMessage(messageContent: string, summary: string): void
-- createErrorMessage(messageContent: string, summary: string): void
-
-Um sämtliche Nachrichten zu löschen kann die Methode **clearMessages()** vom MessageService aufgerufen werden.
-
-
-
+| Method                                   	| Description                                                                                                                                                                                                                                                                                                                                                                                                 	|
+|------------------------------------------	|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| login: void                              	| When you call this method you are redirected to the authentication server where you need to enter your credentials. After a successfull login you are then redirect to your app. The AuthModule then internally stores the authorization token. This token is stored persistent. It is also available after a window refresh. You can get the token by calling the getToken() method of the auth service.   	|
+| getToken: string                         	| This method returns the stored token. Notice that it only returns the token and not the complete authHeader. To get the authHeader you can use the getAuthHeader() method on the authService.                                                                                                                                                                                                               	|
+| getAuthHeader: any                       	| This method returns an auth header object. This auth header object has an Authorization property that contains Bearer + token as value.                                                                                                                                                                                                                                                                     	|
+| refreshToken: Promise<boolean>           	| This method allows you to refresh the token. It returns a promise that indicates if the refresh has been successfull or not. Don't forget to call getToken() again to get the refreshed token.                                                                                                                                                                                                              	|
+| getUserInfo: Observable<KeycloakProfile> 	| This method returns you an Observable who streams the user profile. This user profile has the following structure. - id?: string - username?: string - email?: string - firstName?: string - lastName?: string - enabled?: boolean - emailVerified?: boolean - totp?: boolean - createdTimestamp?: number                                                                                                   	|
+| authenticated: boolean                   	| Returns a boolean that identicates if the user is authenticated or not.                                                                                                                                                                                                                                                                                                                                     	|
+| logout: void                             	| logout: voidThis method will logout the current user and remove the token from the auth module.                                                                                                                                                                                                                                                                                                             	|
