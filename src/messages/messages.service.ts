@@ -8,9 +8,10 @@
  * @since 28.04.2017, 2017.
  */
 import {Observable} from 'rxjs/Observable';
-import {Message} from 'primeng/primeng';
 import {Subject} from 'rxjs/Subject';
 import {Injectable} from '@angular/core';
+import {EstaMessage} from './estaMessage.model';
+import {UUID} from 'angular2-uuid';
 
 const MessageSeverities = {
     SUCCESS: 'success',
@@ -22,7 +23,8 @@ const MessageSeverities = {
 @Injectable()
 export class MessagesService {
 
-    private message$: Subject<Message> = new Subject<Message>();
+    private message$: Subject<EstaMessage> = new Subject<EstaMessage>();
+    private cancel$: Subject<any> = new Subject<any>();
 
     constructor() {
     }
@@ -44,11 +46,18 @@ export class MessagesService {
     }
 
     private createMessage(severity: string, summary: string, detail: string): void {
-        const message: Message = {severity, summary, detail};
-        this.message$.next(message);
+        this.message$.next({id: UUID.UUID(), severity, summary, detail});
     }
 
-    public getMessageStream(): Observable<Message> {
-        return this.message$;
+    public clearMessages(): void {
+        this.cancel$.next();
+    }
+
+    public getMessageStream(): Observable<EstaMessage> {
+        return this.message$.asObservable();
+    }
+
+    public getCancelStream(): Observable<boolean> {
+        return this.cancel$.asObservable();
     }
 }
