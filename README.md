@@ -1,10 +1,10 @@
-- [Esta Web JS Exstentions](#esta-web-js-exstentions)
+# Esta Web JS Exstentions
+
   * [Getting started](#getting-started)
   * [Authentication Module](#authentication-module)
     + [How to use the authentication module](#how-to-use-the-authentication-module)
     + [Authentication Service](#authentication-service)
 
-# Esta Web JS Exstentions
 This projects contains all extensions for Esta WebJS 2.
 Currently we offer the following extensions:
 - Authentication Module
