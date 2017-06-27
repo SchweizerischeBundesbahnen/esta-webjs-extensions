@@ -18,16 +18,65 @@ with Keycloak at SBB. It provides you an authentication service that you
 can use to handle all your authentication tasks.
 
 ### How to use the authentication module
-After you have installed the esta-webjs-extensions package you can import
-the authentication module inside your angular 2 application like follows:
+
+Keycloak needs to do some initial setup at the very beginning of the application.
+Therefore the EstaAuthService must be loaded even before Angular. Therefore
+you should call the init Method of the EstaAuthService before you bootstrap
+your AppModule. Your main.ts should look like this:
 
 ```
-TODO
+import './polyfills.ts';
+
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core';
+import { environment } from './environments/environment';
+import { AppModule } from './app/app.module';
+import {EstaAuthService} from 'esta-webjs-extensions';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+EstaAuthService.init({ onLoad: 'check-sso'}, 'assets/auth-config.json')
+    .then(() => {
+      platformBrowserDynamic().bootstrapModule(AppModule);
+    })
+    .catch((err) => {
+      console.log('Error starting Auth-Service or AngularJS', err);
+    });
 ```
 
-Inside your component you can then use the service in the following way:
+After the init Method has been called you can import the EstaAuthModule
+in your app or core module.
+
 ```
-TODO
+import {EstaAuthModule} from 'esta-webjs-extensions';
+@NgModule({
+    imports: [
+        CommonModule,
+        RouterModule,
+        EstaAuthModule
+    ],
+    declarations: [NavComponent, HomeComponent],
+    exports: [NavComponent]
+})
+export class CoreModule {}
+```
+
+By importing the EstaAuthModule the EstaAuthService is now available ofer
+Dependency Injection inside your application.
+```
+import {EstaAuthService} from 'esta-webjs-extensions';
+
+@Component({
+    selector: ...,
+    templateUrl: ...
+})
+export class SampleComponent{
+
+    constructor(private authService: EstaAuthService){
+    }
+}
 ```
 
 ### Authentication Service

@@ -13,5 +13,5 @@ import {EstaAuthService} from './authentication.service';
 @NgModule({
     providers: [EstaAuthService]
 })
-export default class EstaAuthModule {
+export class EstaAuthModule {
 }
