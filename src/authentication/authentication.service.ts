@@ -17,7 +17,7 @@ const Keycloak = require('keycloak-js');
 
 @Injectable()
 export class EstaAuthService {
-    static keycloak: any;
+    static keycloak: any = undefined;
     static userProfile: BehaviorSubject<KeycloakProfile> = new BehaviorSubject(null);
 
     public static init(options?: any, configUrl?: string): Promise<any> {

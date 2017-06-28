@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
     "report-coverage": "cat ./coverage/coverage.json | codecov",
-    "test": "karma start"
+    "test": "karma start",
+    "build": "ngc -p tsconfig.json"
   },
   "peerDependencies": {
     "@angular/core": "^4.2.4",
@@ -17,6 +18,7 @@
     "@angular/animations": "^4.2.4",
     "@angular/common": "^4.2.4",
     "@angular/compiler": "^4.2.4",
+    "@angular/compiler-cli": "^4.2.4",
     "@angular/core": "^4.2.4",
     "@angular/forms": "^4.2.4",
     "@angular/platform-browser": "^4.2.4",
