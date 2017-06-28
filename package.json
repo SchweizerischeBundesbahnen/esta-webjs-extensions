@@ -4,7 +4,7 @@
   "description": "Extension modules for ESTA WebJS",
   "main": "index.ts",
   "scripts": {
-    "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
+    "lint": "tslint --type-check --project tsconfig.json",
     "report-coverage": "cat ./coverage/coverage.json | codecov",
     "test": "karma start",
     "build": "ngc -p tsconfig.json"
