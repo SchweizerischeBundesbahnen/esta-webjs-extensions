@@ -16,15 +16,15 @@ import {KeycloakProfile} from './keycloakProfile.model';
 const Keycloak = require('keycloak-js');
 
 @Injectable()
-export class EstaAuthService {
+export class AuthService {
     static keycloak: any = undefined;
     static userProfile: BehaviorSubject<KeycloakProfile> = new BehaviorSubject(null);
 
     public static init(options?: any, configUrl?: string): Promise<any> {
-        EstaAuthService.keycloak = EstaAuthService.createKeycloak(configUrl);
+        AuthService.keycloak = AuthService.createKeycloak(configUrl);
 
         return new Promise((resolve, reject) => {
-            EstaAuthService.keycloak.init(options)
+            AuthService.keycloak.init(options)
                 .success(() => {
                     resolve();
                 })
@@ -39,27 +39,27 @@ export class EstaAuthService {
     }
 
     public login(): void {
-        EstaAuthService.keycloak.login();
+        AuthService.keycloak.login();
     }
 
     public logout(): void {
-        EstaAuthService.keycloak.logout();
+        AuthService.keycloak.logout();
     }
 
     public authenticated(): boolean {
-        return EstaAuthService.keycloak.authenticated;
+        return AuthService.keycloak.authenticated;
     }
 
-    public refreshToken(minValidity: number): Promise<boolean> {
+    public refreshToken(minValidity: number = 5): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            EstaAuthService.keycloak.updateToken(minValidity)
+            AuthService.keycloak.updateToken(minValidity)
                 .success(() => resolve(true))
                 .error((err) => reject(err));
         });
     }
 
     public getToken(): string {
-        return EstaAuthService.keycloak.token;
+        return AuthService.keycloak.token;
     }
 
     public getAuthHeader(): any {
@@ -69,15 +69,15 @@ export class EstaAuthService {
     }
 
     public getUserInfo(): Observable<KeycloakProfile> {
-        if (this.authenticated() && !EstaAuthService.keycloak.profile) {
-            EstaAuthService.keycloak.loadUserProfile()
+        if (this.authenticated() && !AuthService.keycloak.profile) {
+            AuthService.keycloak.loadUserProfile()
                 .success(profile => {
-                    EstaAuthService.userProfile.next(profile);
+                    AuthService.userProfile.next(profile);
                 })
                 .error(err => {
                     throw new Error(err);
                 });
         }
-        return EstaAuthService.userProfile.asObservable();
+        return AuthService.userProfile.asObservable();
     }
 }

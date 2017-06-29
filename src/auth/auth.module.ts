@@ -8,10 +8,10 @@
  * @since 22.06.2017, 2017.
  */
 import {NgModule} from '@angular/core';
-import {EstaAuthService} from './authentication.service';
+import {AuthService} from './auth.service';
 
 @NgModule({
-    providers: [EstaAuthService]
+    providers: [AuthService]
 })
-export class EstaAuthModule {
+export class AuthModule {
 }

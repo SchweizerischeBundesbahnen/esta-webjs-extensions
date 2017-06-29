@@ -7,10 +7,10 @@
  * @version: 2.0.0
  * @since 22.06.2017, 2017.
  */
-import {EstaAuthService} from './authentication.service';
+import {AuthService} from './auth.service';
 const Keycloak = require('keycloak-js');
 
-describe('Authentication Service', () => {
+describe('Auth Service', () => {
 
     it(`should init Keycloak and return a promise which resolves when the init 
     call with the options was successfull`, done => {
@@ -21,9 +21,9 @@ describe('Authentication Service', () => {
                 success: callback => callback()
             })
         };
-        spyOn(EstaAuthService, 'createKeycloak').and.returnValue(keyCloakMock);
+        spyOn(AuthService, 'createKeycloak').and.returnValue(keyCloakMock);
         // when
-        const promise = EstaAuthService.init(options);
+        const promise = AuthService.init(options);
         // then
         promise.then(() => done(), err => fail('Promise was not resolved'));
     });
@@ -42,9 +42,9 @@ describe('Authentication Service', () => {
                 },
             })
         };
-        spyOn(EstaAuthService, 'createKeycloak').and.returnValue(keyCloakMock);
+        spyOn(AuthService, 'createKeycloak').and.returnValue(keyCloakMock);
         // when
-        const promise = EstaAuthService.init(options);
+        const promise = AuthService.init(options);
         // then
         promise.then(
             () => fail(),
@@ -55,39 +55,39 @@ describe('Authentication Service', () => {
         );
     });
 
-    it('should call .login on the EstaAuthService.keycloak on login', () => {
+    it('should call .login on the AuthService.keycloak on login', () => {
         // given
-        const sut = new EstaAuthService();
-        EstaAuthService.keycloak = {
+        const sut = new AuthService();
+        AuthService.keycloak = {
             login: () => {
             }
         };
-        spyOn(EstaAuthService.keycloak, 'login');
+        spyOn(AuthService.keycloak, 'login');
         // when
         sut.login();
         // then
-        expect(EstaAuthService.keycloak.login).toHaveBeenCalled();
+        expect(AuthService.keycloak.login).toHaveBeenCalled();
     });
 
-    it('should call .logout on the EstaAuthService.keycloak on logout', () => {
+    it('should call .logout on the AuthService.keycloak on logout', () => {
         // given
-        const sut = new EstaAuthService();
-        EstaAuthService.keycloak = {
+        const sut = new AuthService();
+        AuthService.keycloak = {
             logout: () => {
             }
         };
-        spyOn(EstaAuthService.keycloak, 'logout');
+        spyOn(AuthService.keycloak, 'logout');
         // when
         sut.logout();
         // then
-        expect(EstaAuthService.keycloak.logout).toHaveBeenCalled();
+        expect(AuthService.keycloak.logout).toHaveBeenCalled();
     });
 
     it(`should return the value of .authenticated on the EstaAuthService.keycloak 
     when we call authenticated`, () => {
         // given
-        const sut = new EstaAuthService();
-        EstaAuthService.keycloak = {
+        const sut = new AuthService();
+        AuthService.keycloak = {
             authenticated: true
         };
         // when
@@ -99,9 +99,9 @@ describe('Authentication Service', () => {
     it(`should return the value .token on the EstaAuthService.keycloak 
     when we call getToken`, () => {
         // given
-        const sut = new EstaAuthService();
+        const sut = new AuthService();
         const expectedToken = '123-456-789';
-        EstaAuthService.keycloak = {token: expectedToken};
+        AuthService.keycloak = {token: expectedToken};
         // when
         const token = sut.getToken();
         // then
@@ -110,7 +110,7 @@ describe('Authentication Service', () => {
 
     it('should return the AuthHeader when we call getAuthHeader', () => {
         // given
-        const sut = new EstaAuthService();
+        const sut = new AuthService();
         const token = '123-456-789';
         spyOn(sut, 'getToken').and.returnValue(token);
         // when
@@ -124,14 +124,14 @@ describe('Authentication Service', () => {
     it(`should return a promise when we call refreshToken. This promise must be 
         resolved when the refresh was successfull`, done => {
         // given
-        const sut = new EstaAuthService();
+        const sut = new AuthService();
         const minValidity = 5;
         const keyCloakMock = {
             updateToken: () => ({
                 success: callback => callback()
             })
         };
-        EstaAuthService.keycloak = keyCloakMock;
+        AuthService.keycloak = keyCloakMock;
         // when
         const promise = sut.refreshToken(minValidity);
         // then
@@ -146,7 +146,7 @@ describe('Authentication Service', () => {
     it(`should return a promise when we call refreshToken. This promise must be 
         rejected when an error during refresh occured`, done => {
         // given
-        const sut = new EstaAuthService();
+        const sut = new AuthService();
         const minValidity = 5;
         const errorMessage = 'The refresh of the token failed';
         const keyCloakMock = {
@@ -156,7 +156,7 @@ describe('Authentication Service', () => {
                 })
             })
         };
-        EstaAuthService.keycloak = keyCloakMock;
+        AuthService.keycloak = keyCloakMock;
         // when
         const promise = sut.refreshToken(minValidity);
         // then
@@ -170,12 +170,12 @@ describe('Authentication Service', () => {
 
     it(`should return an Observable that streams the userprofile`, () => {
         // given
-        const sut = new EstaAuthService();
+        const sut = new AuthService();
         const userprofile = {
             firstname: 'Ruffy',
             name: 'Monkey D'
         };
-        EstaAuthService.userProfile.next(userprofile);
+        AuthService.userProfile.next(userprofile);
         spyOn(sut, 'authenticated').and.returnValue(false);
         // when
         const userprofile$ = sut.getUserInfo();
@@ -188,12 +188,12 @@ describe('Authentication Service', () => {
     it(`should load the userprofile if the user is authenticated and Keycloak has no profile yet.
     It should then stream the loaded profile`, () => {
         // given
-        const sut = new EstaAuthService();
+        const sut = new AuthService();
         const userprofile = {
             firstname: 'Ruffy',
             name: 'Monkey D'
         };
-        EstaAuthService.keycloak = {
+        AuthService.keycloak = {
             profile: false,
             loadUserProfile: () => ({
                 success: callback => {
@@ -217,9 +217,9 @@ describe('Authentication Service', () => {
     it(`should load the userprofile if the user is authenticated and Keycloak has no profile yet.
     It should then stream an error if an error occured during the loading of the profile`, () => {
         // given
-        const sut = new EstaAuthService();
+        const sut = new AuthService();
         const errorMessage = 'An error occured while loading the profile';
-        EstaAuthService.keycloak = {
+        AuthService.keycloak = {
             profile: false,
             loadUserProfile: () => ({
                 success: () => ({
