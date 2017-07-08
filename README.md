@@ -1,13 +1,13 @@
 # Esta Web JS Exstentions
 
   * [Getting started](#getting-started)
-  * [Authentication Module](#authentication-module)
+  * [Authentication module](#authentication-module)
     + [How to use the authentication module](#how-to-use-the-authentication-module)
-    + [Authentication Service](#authentication-service)
+    + [Authentication service](#authentication-service)
 
-This projects contains all extensions for Esta WebJS 2.
+This project contains all extensions for esta-webjs-2.
 Currently we offer the following extensions:
-- Authentication Module
+- Auehentication module
 
 ## Getting started
 To use esta-webjs-extensions you need to have node and npm installed.
@@ -23,54 +23,67 @@ with Keycloak at SBB. It provides an authentication service that you
 can use to handle all your authentication tasks.
 
 ### How to use the authentication module
-Keycloak needs to do some initial setup at the very beginning of the application.
-Therefore the EstaAuthService must be loaded before Angular. You need to
- call the init Method of the EstaAuthService before you bootstrap
-your AppModule. Your main.ts should look like this:
+After the redirect from the authentication server, keycloak needs to be
+notified even before Angular has started. This is why we call the init method
+ of the Authservice before Angular has loaded. The init method returns
+  us a promise. After the promise is resolved or rejected we bootstrap angular
+  with our main application. Your main.ts should look like this:
 
 ```
 import './polyfills.ts';
 
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
-import { environment } from './environments/environment';
-import { AppModule } from './app/app.module';
-import {EstaAuthService} from 'esta-webjs-extensions';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {enableProdMode} from '@angular/core';
+import {environment} from './environments/environment';
+import {AppModule} from './app/app.module';
+import {AuthService} from 'esta-webjs-extensions';
 
 if (environment.production) {
   enableProdMode();
 }
 
-EstaAuthService.init({ onLoad: 'check-sso'}, 'assets/auth-config.json')
-    .then(() => {
-      platformBrowserDynamic().bootstrapModule(AppModule);
-    })
-    .catch((err) => {
-      console.log('Error starting Auth-Service or AngularJS', err);
-    });
+AuthService.init({onLoad: 'check-sso'}, 'assets/auth-config.json')
+  .then(() => {
+      startAngular();
+  })
+  .catch((err) => {
+    console.warn('Error starting app with keycloak auth-service. Do you have the auth-config.json? Starting angular anyway', err);
+    startAngular();
+  });
+
+function startAngular() {
+  platformBrowserDynamic().bootstrapModule(AppModule);
+}
 ```
 
-After the init Method has been called you can import the EstaAuthModule
-in your app or core module.
+After the set up is done you can import the Authmodule in your app module or in your core module.
 
 ```
-import {EstaAuthModule} from 'esta-webjs-extensions';
+/**
+ * Copyright (C) Schweizerische Bundesbahnen SBB, 2017.
+ *
+ * ESTA WebJS: Core Module
+ *
+ * @author u218609 (Kevin Kreuzer)
+ * @version: 2.0.0
+ * @since 28.04.2017, 2017.
+ */
+ ...
+import {AuthModule} from 'esta-webjs-extensions';
+
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        EstaAuthModule
-    ],
-    declarations: [NavComponent, HomeComponent],
-    exports: [NavComponent]
+  imports: [
+    AuthModule
+  ]
+  declarations: [...]
 })
-export class CoreModule {}
+export class CoreModule {
+}
 ```
 
-By importing the EstaAuthModule the EstaAuthService is now available over
-Dependency Injection inside your application.
+By importing the Authmodule the Authservice is now available over dependency injection inside your application.
 ```
-import {EstaAuthService} from 'esta-webjs-extensions';
+import {AuthService} from 'esta-webjs-extensions';
 
 @Component({
     selector: ...,
@@ -78,13 +91,13 @@ import {EstaAuthService} from 'esta-webjs-extensions';
 })
 export class SampleComponent{
 
-    constructor(private authService: EstaAuthService){
+    constructor(private authService: AuthService){
     }
 }
 ```
 
 ### Authentication Service
-The Authentication Service provides the nescessary API to interact with
+The Authentication Service provides the necessary API to interact with
 the authentication module.
 
 | Method                                   	| Description                                                                                                                                                                                                                                                                                                                                                                                                 	|
