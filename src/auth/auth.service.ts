@@ -12,7 +12,7 @@ import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/never';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
-import {KeycloakProfile} from './keycloakProfile.model';
+import {KeycloakProfile} from './keycloak-profile.model';
 const Keycloak = require('keycloak-js');
 
 @Injectable()
