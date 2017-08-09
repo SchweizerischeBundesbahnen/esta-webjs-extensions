@@ -1,0 +1,239 @@
+@import 'sbb-colors';
+@import 'sbb-fonts';
+@import 'app-variables';
+@import 'primeng-variables';
+
+/* Tabview */
+.ui-tabview {
+  padding-left: 0;
+  padding-right: 0;
+
+  .ui-tabview-nav {
+    background: transparent;
+  }
+
+  .ui-tabview-panels {
+    border: 1px solid $contentBorderColor;
+  }
+}
+
+/* Inputs */
+.ui-inputtext, .ui-multiselect {
+  &.ui-state-default {
+    background-color: $sbb-white;
+    width: 100%;
+    &:hover {
+      -moz-box-shadow: 0 0 5px $sbb-black-80;
+      -webkit-box-shadow: 0 0 5px $sbb-black-80;
+      box-shadow: 0 0 5px $sbb-black-80;
+      background-color: $sbb-white;
+    }
+  }
+
+  &.ui-state-focus,
+  &:focus,
+  &.ui-state-hover,
+  &:hover {
+    -moz-box-shadow: 0 0 5px $sbb-black-80;
+    -webkit-box-shadow: 0 0 5px $sbb-black-80;
+    box-shadow: 0 0 5px $sbb-black-80;
+  }
+}
+
+/* Autocompletion */
+.ui-autocomplete {
+  width: 100%;
+}
+
+/* Dropdown */
+.ui-dropdown {
+  width: 100%;
+}
+
+/* Buttons */
+.ui-button-text {
+  font-family: 'SBB Web Roman', Arial, Helvetica, sans-serif;
+}
+
+.ui-button.ui-state-default,
+.ui-button.ui-button-secondary.ui-state-default,
+.ui-widget-content .ui-button.ui-state-default {
+  border-color: $sbb-black-20;
+  background-color: $sbb-black-20;
+
+  .ui-button-text {
+    color: $sbb-black-90;
+  }
+
+  &:enabled:hover,
+  &:focus {
+    border-color: $sbb-black-30;
+    background-color: $sbb-black-30;
+  }
+}
+
+.ui-button.ui-button-primary.ui-state-default {
+  height: 3em;
+  padding: 0 2em;
+  border-color: $sbb-red-100;
+  background-color: $sbb-red-100;
+
+  .ui-button-text {
+    color: $sbb-white;
+  }
+
+  &:enabled:hover,
+  &:focus {
+    border-color: $sbb-red-125;
+    background-color: $sbb-red-125;
+  }
+}
+
+/* Calendar */
+p-calendar {
+
+  &[ng-reflect-time-only='true'] {
+    > .ui-calendar {
+      width: 4.1em;
+
+      > .ui-datepicker {
+        width: 6em;
+
+        .ui-minute-picker {
+          margin-right: .5em;
+        }
+      }
+    }
+  }
+
+  .ui-calendar-w-btn {
+    width: 6.1em;
+    margin-right: 2em;
+  }
+}
+
+/* DataTable  */
+p-datatable:focus .ui-datatable tbody > tr.ui-widget-content.ui-state-highlight {
+  background-color: $sbb-black-80;
+  color: $sbb-black-10;
+}
+
+.ui-datatable {
+  .ui-datatable-scrollable-body {
+    overflow-y: scroll;
+  }
+  .ui-widget-header {
+    background-color: $sbb-white;
+  }
+  th.ui-state-active {
+    background: $sbb-black-80;
+    border-color: $sbb-black-20;
+    color: $sbb-black-10;
+  }
+
+  tbody {
+    > tr.ui-widget-content {
+      &.ui-datatable-odd {
+        background-color: $sbb-black-5;
+      }
+
+      &.ui-state-highlight {
+        background-color: $sbb-black-40;
+        color: $sbb-black-100;
+      }
+
+      td {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        .ui-button.ui-button-icon-only .ui-button-text {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+/* Panel */
+.ui-panel.ui-widget {
+  border-width: 1px;
+  padding: 0;
+}
+
+.ui-panel-titlebar {
+  padding: 1em .75em !important;
+  > .clickable {
+    cursor: pointer;
+  }
+}
+
+.ui-panel .ui-panel-content {
+  padding: 0;
+}
+
+/* Validation */
+.ui-inputtext.ng-dirty.ng-invalid,
+p-dropdown.ng-dirty.ng-invalid > .ui-dropdown,
+p-autocomplete.ng-dirty.ng-invalid > .ui-autocomplete > .ui-inputtext,
+p-calendar.ng-dirty.ng-invalid > .ui-inputtext,
+p-chips.ng-dirty.ng-invalid > .ui-inputtext,
+p-inputmask.ng-dirty.ng-invalid > .ui-inputtext,
+p-checkbox.ng-dirty.ng-invalid .ui-chkbox-box,
+p-radiobutton.ng-dirty.ng-invalid .ui-radiobutton-box,
+p-inputswitch.ng-dirty.ng-invalid .ui-inputswitch,
+p-listbox.ng-dirty.ng-invalid .ui-inputtext,
+p-multiselect.ng-dirty.ng-invalid > .ui-multiselect,
+p-spinner.ng-dirty.ng-invalid > .ui-inputtext,
+p-selectbutton.ng-dirty.ng-invalid .ui-button,
+p-togglebutton.ng-dirty.ng-invalid .ui-button {
+  border: $stateDefaultBorderWidth solid $invalidInputBorderColor;
+  -moz-box-shadow: 0 0 5px $invalidInputBorderColor;
+  -webkit-box-shadow: 0 0 5px $invalidInputBorderColor;
+  box-shadow: 0 0 5px $invalidInputBorderColor;
+}
+
+/* Tooltip */
+.ui-tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.ui-tooltip-bottom .ui-tooltip-arrow {
+  top: -0.25em;
+  left: 50%;
+  margin-left: -.25em;
+  border-width: 0 .5em .5em;
+  border-bottom-color: transparent;
+}
+
+.ui-tooltip .ui-tooltip-text {
+  padding: .25em .5em .375em .5em;
+  background-color: $sbb-white;
+  color: $sbb-black-100;
+  white-space: normal;
+  border: 1px solid $sbb-black-60;
+}
+
+/* Grid */
+.ui-g-1, .ui-g-2, .ui-g-3, .ui-g-4, .ui-g-5, .ui-g-6, .ui-g-7, .ui-g-8, .ui-g-9, .ui-g-10, .ui-g-11, .ui-g-12 {
+  padding: 0.2em;
+}
+
+.ui-g-nopad {
+  padding: 0;
+}
+
+/* Checkbox */
+.ui-chkbox-label {
+  cursor: pointer;
+}
+
+.ui-corner-all {
+  border-radius: 0;
+}
+
+.ui-growl {
+  padding-top: 4em;
+}
