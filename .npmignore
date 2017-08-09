@@ -27,3 +27,6 @@ webpack.config.js
 # git
 .gitignore
 .gitattributes
+
+# TypesScript
+tslint.json
