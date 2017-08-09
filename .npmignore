@@ -16,5 +16,17 @@ npm-debug.log
 
 # Tests
 coverage/*
+karma.conf.js
+spec-bundle.js
+webpack.config.js
 **.spec.ts
 
+# travis
+.travis.yml
+
+# git
+.gitignore
+.gitattributes
+
+# TypesScript
+tslint.json

@@ -1,0 +1,12 @@
+/* Obacht: Die Reihenfolge der Imports ist relevant und darf nicht geändert werden. */
+// SBB corporate design guidelines
+@import './sbb-fonts';
+@import './sbb-colors';
+// Bootstrap stuff
+@import './bootstrap-variables';
+// PrimeNG stuff
+@import './primeng-variables';
+@import './primeng-overrides';
+// Custom app stuff
+@import './app-variables';
+@import './app-style';
