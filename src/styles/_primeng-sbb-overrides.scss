@@ -5,3 +5,45 @@
   background-color: $sbb-red-100;
   color: $sbb-white;
 }
+
+.ui-button.ui-button-primary.ui-state-default {
+  border-color: $sbb-red-100;
+  background-color: $sbb-red-100;
+
+  .ui-button-text {
+    color: $sbb-white;
+  }
+
+  &:enabled:hover,
+  &:focus {
+    border-color: $sbb-red-125;
+    background-color: $sbb-red-125;
+  }
+}
+
+
+// Growl
+.ui-growl {
+  z-index: 1050 !important;
+}
+
+.ui-growl-item-container {
+  color: $sbb-white;
+}
+
+.ui-growl-message-warn,.ui-messages-warn {
+  background-color: $warning;
+}
+
+.ui-growl-message-info,.ui-messages-info {
+  border-color: $info;
+  background-color: $info;
+}
+
+.ui-growl-message-success,.ui-messages-success {
+  background-color: $success;
+}
+
+.ui-growl-message-error,.ui-messages-error {
+  background-color: $danger;
+}
