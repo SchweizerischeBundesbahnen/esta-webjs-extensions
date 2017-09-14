@@ -1,6 +1,5 @@
 @import 'sbb-colors';
 @import 'sbb-fonts';
-@import 'app-variables';
 @import 'primeng-variables';
 
 /* Tabview */
@@ -73,7 +72,6 @@
 }
 
 .ui-button.ui-button-primary.ui-state-default {
-  height: 3em;
   padding: 0 2em;
   border-color: $sbb-red-100;
   background-color: $sbb-red-100;
