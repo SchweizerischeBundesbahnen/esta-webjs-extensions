@@ -9,6 +9,7 @@
 @import './boostrap-imports';
 
 // PrimeNG
-@import './primeng-variables';
-@import './primeng-sbb-styles';
+@import '~primeng/resources/primeng.css';
+@import 'primeng-sbb-variables';
+@import 'primeng-sbb-overrides';
 
