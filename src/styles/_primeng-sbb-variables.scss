@@ -1,4 +1,5 @@
 @import 'sbb-colors';
+@import 'boostrap-sbb-styles';
 
 //Header
 $headerBorderWidth: 0;
@@ -50,3 +51,13 @@ $inputBgColor: $sbb-white;
 $inputTextColor: $sbb-black-100;
 $invalidInputBorderColor: $sbb-red-100;
 $inputGroupTextColor: $sbb-black-100;
+
+// Typography
+$fontFamily: $font-family-base;
+$fontSize: 1em;
+$borderRadius: 0px;
+$disabledOpacity: 0.35;
+
+// Import base prime ng theme
+@import '~primeng/resources/themes/theme';
+
