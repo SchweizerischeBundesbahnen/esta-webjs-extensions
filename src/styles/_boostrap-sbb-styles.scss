@@ -1,0 +1,82 @@
+@import '_sbb-colors.scss';
+@import '_sbb-fonts.scss';
+
+// Typography
+$font-family-sans-serif: 'SBB Web Light', Arial, Helvetica, sans-serif !default;
+$font-family-base: $font-family-sans-serif !default;
+
+body {
+  font-family: 'SBBWeb Light', Arial, Helvetica, sans-serif;
+  font-size: 15px;
+}
+
+h1, h2 {
+  font-family: 'SBBWeb Thin', Arial, Helvetica, sans-serif;
+}
+
+h3, h4, h5, h6 {
+  font-family: 'SBBWeb Regular', Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.47rem;
+}
+
+h4 {
+  font-size: 1.3rem;
+}
+
+h5 {
+  font-size: 1.15rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+// Main container
+main > .container {
+  padding-top: 2em;
+}
+
+// Navbar
+nav {
+  background-color: $sbb-white;
+  border-bottom: 1px solid $sbb-black-10;
+  font-size: 16.5px;
+  font-family: 'SBB Web Roman';
+
+  .nav-link {
+    cursor: pointer;
+    color: $sbb-black-100 !important;
+
+    &.active {
+      padding-bottom: -1em !important;
+      height: 100%;
+      border-bottom: 1px solid $sbb-black-90;
+    }
+  }
+
+  .navbar-brand {
+    margin-left: 1rem;
+    margin-right: 0;
+  }
+}
+
+.company-logo {
+  width: 10em;
+  float: right;
+}
+
+// Jumbotron
+.jumbotron {
+  background-color: $sbb-black-10 !important;
+}

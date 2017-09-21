@@ -1,4 +1,4 @@
-//Farben gemäss Digitale Richtlinien SBB.
+// Farben gemäss Digitale Richtlinien SBB.
 
 // Call to Action Elements.
 $sbb-red-100: #eb0000;
@@ -26,3 +26,9 @@ $sbb-white: #ffffff;
 
 // Piktogramm-Hintergrund, ansonsten unzulässig
 $sbb-blue: #003399;
+
+// Business-App Colors
+$warning: #f0ad4e !default;
+$success:  #5cb85c !default;
+$info:   #5bc0de !default;
+$danger: #d9534f !default;

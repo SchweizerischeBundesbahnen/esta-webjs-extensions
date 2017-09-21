@@ -1,0 +1,18 @@
+// Reset and dependencies
+@import "~bootstrap/scss/bootstrap-reboot";
+@import "~bootstrap/scss/print";
+
+// Core CSS
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/code";
+@import "~bootstrap/scss/bootstrap-grid";
+
+// Navbar
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+
+// Utility classes
+@import "~bootstrap/scss/jumbotron";
+@import "~bootstrap/scss/utilities";
