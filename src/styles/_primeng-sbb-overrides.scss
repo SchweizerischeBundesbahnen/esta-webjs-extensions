@@ -30,19 +30,31 @@
   color: $sbb-white;
 }
 
-.ui-growl-message-warn,.ui-messages-warn {
+.ui-growl-message-warn, .ui-messages-warn {
   background-color: $warning;
 }
 
-.ui-growl-message-info,.ui-messages-info {
+.ui-growl-message-info, .ui-messages-info {
   border-color: $info;
   background-color: $info;
 }
 
-.ui-growl-message-success,.ui-messages-success {
+.ui-growl-message-success, .ui-messages-success {
   background-color: $success;
 }
 
-.ui-growl-message-error,.ui-messages-error {
+.ui-growl-message-error, .ui-messages-error {
   background-color: $danger;
+}
+
+.ui-state-active {
+  color: $sbb-white !important;
+}
+
+.ui-slider {
+  background: $sbb-black-80;
+  border: none;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) inset;
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) inset;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) inset;
 }
