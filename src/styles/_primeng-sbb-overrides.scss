@@ -47,14 +47,69 @@
   background-color: $danger;
 }
 
-.ui-state-active {
+// Kalender ausgewählter Tag
+.ui-datepicker-calendar .ui-state-active {
   color: $sbb-white !important;
+}
+// Kalender aktueller Tag
+.ui-datepicker-calendar .ui-state-highlight {
+  color: $sbb-black-100 !important;
+  background-color: $sbb-black-20;
+}
+
+// active & focus soll active gewinnen:
+.ui-state-active.ui-state-focus {
+  border-color: $sbb-red-100;
+  background: $sbb-red-100;
+  color: $sbb-white;
+}
+
+// Input switches
+.ui-inputswitch.ui-widget-content {
+  border: 1px solid $sbb-black-40;
+}
+
+.ui-inputswitch-handle.ui-state-default {
+  border-color: $sbb-black-40;
+  background-color: $sbb-black-40;
+}
+
+// Radio buttons
+.ui-radiobutton-box.ui-state-active {
+  background-color: $sbb-white;
+  color: $sbb-black-100;
+  border-color: $sbb-black-100;
 }
 
 .ui-slider {
-  background: $sbb-black-80;
+  background: $sbb-black-40;
   border: none;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) inset;
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) inset;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) inset;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) inset;
+}
+
+// Checkbox labels
+.ui-chkbox-label {
+  margin-bottom: 0px;
+}
+
+// Paginator
+.ui-paginator-element.ui-state-active {
+  color: $sbb-white !important;
+}
+
+.ui-steps-item.ui-state-highlight {
+  border: 1px solid $sbb-red-100;
+}
+.ui-steps-item.ui-state-active {
+  border: 1px solid $sbb-red-100;
+}
+
+// Progressbar
+.ui-progressbar {
+  border: 1px solid $sbb-black-40;
+}
+.ui-progressbar .ui-widget-header {
+  background-color: $sbb-black-40;
 }

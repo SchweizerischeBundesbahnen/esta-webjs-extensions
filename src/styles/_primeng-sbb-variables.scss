@@ -22,7 +22,7 @@ $stateDefaultBgColor: $sbb-black-5;
 $stateDefaultTextColor: $sbb-black-80;
 
 //Active State
-$stateActiveBorderColor: $sbb-black-90;
+$stateActiveBorderColor: $sbb-red-100;
 $stateActiveBgColor: $sbb-red-100;
 $stateActiveTextColor: $sbb-white;
 
@@ -33,8 +33,8 @@ $stateHighlightTextColor: $sbb-white;
 
 //Focus State
 $stateFocusBorderColor: $sbb-black-20;
-$stateFocusBgColor: $sbb-red-100;
-$stateFocusTextColor: $sbb-white;
+$stateFocusBgColor: $sbb-white;
+$stateFocusTextColor: $sbb-black-80;
 
 //Error State
 $stateErrorBorderColor: $sbb-red-100;
@@ -42,7 +42,7 @@ $stateErrorBgColor: $sbb-white;
 $stateErrorTextColor: $sbb-red-100;
 
 //Hover State
-$stateHoverBorderColor: $sbb-black-20;
+$stateHoverBorderColor: $sbb-red-100;
 $stateHoverBgColor: $sbb-red-100;
 $stateHoverTextColor: $sbb-white;
 
