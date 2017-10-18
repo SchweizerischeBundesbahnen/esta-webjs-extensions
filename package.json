@@ -1,6 +1,6 @@
 {
   "name": "esta-webjs-extensions",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "Extension modules for ESTA WebJS",
   "main": "index.ts",
   "scripts": {
