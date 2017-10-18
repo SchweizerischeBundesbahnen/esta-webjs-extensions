@@ -13,7 +13,7 @@ import 'rxjs/add/observable/never';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 import {KeycloakProfile} from './keycloak-profile.model';
-const Keycloak = require('keycloak-js');
+import * as Keycloak from 'keycloak-js';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +35,7 @@ export class AuthService {
     }
 
     static createKeycloak(configUrl) {
-        return new Keycloak(configUrl);
+        return Keycloak(configUrl);
     }
 
     public login(): void {
