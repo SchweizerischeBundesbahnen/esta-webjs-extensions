@@ -8,11 +8,13 @@
  * @since 22.06.2017, 2017.
  */
 import {AuthService} from './auth.service';
+import {KeycloakProfile} from './keycloak-profile.model';
+
 const Keycloak = require('keycloak-js');
 
 describe('Auth Service', () => {
 
-    it(`should init Keycloak and return a promise which resolves when the init 
+    it(`should init Keycloak and return a promise which resolves when the init
     call with the options was successfull`, done => {
         // given
         const options = {};
@@ -28,7 +30,7 @@ describe('Auth Service', () => {
         promise.then(() => done(), err => fail('Promise was not resolved'));
     });
 
-    it(`should init Keycloak and return a promise which is rejected when the init 
+    it(`should init Keycloak and return a promise which is rejected when the init
     call with the options failed`, done => {
         // given
         const options = {};
@@ -83,7 +85,7 @@ describe('Auth Service', () => {
         expect(AuthService.keycloak.logout).toHaveBeenCalled();
     });
 
-    it(`should return the value of .authenticated on the EstaAuthService.keycloak 
+    it(`should return the value of .authenticated on the EstaAuthService.keycloak
     when we call authenticated`, () => {
         // given
         const sut = new AuthService();
@@ -96,7 +98,7 @@ describe('Auth Service', () => {
         expect(isAuthenticated).toBeTruthy();
     });
 
-    it(`should return the value .token on the EstaAuthService.keycloak 
+    it(`should return the value .token on the EstaAuthService.keycloak
     when we call getToken`, () => {
         // given
         const sut = new AuthService();
@@ -121,7 +123,7 @@ describe('Auth Service', () => {
         });
     });
 
-    it(`should return a promise when we call refreshToken. This promise must be 
+    it(`should return a promise when we call refreshToken. This promise must be
         resolved when the refresh was successfull`, done => {
         // given
         const sut = new AuthService();
@@ -143,7 +145,7 @@ describe('Auth Service', () => {
         );
     });
 
-    it(`should return a promise when we call refreshToken. This promise must be 
+    it(`should return a promise when we call refreshToken. This promise must be
         rejected when an error during refresh occured`, done => {
         // given
         const sut = new AuthService();
@@ -174,7 +176,7 @@ describe('Auth Service', () => {
         const userprofile = {
             firstname: 'Ruffy',
             name: 'Monkey D'
-        };
+        } as KeycloakProfile;
         AuthService.userProfile.next(userprofile);
         spyOn(sut, 'authenticated').and.returnValue(false);
         // when
@@ -192,7 +194,7 @@ describe('Auth Service', () => {
         const userprofile = {
             firstname: 'Ruffy',
             name: 'Monkey D'
-        };
+        } as KeycloakProfile;
         AuthService.keycloak = {
             profile: false,
             loadUserProfile: () => ({
