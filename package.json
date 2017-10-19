@@ -20,7 +20,7 @@
     "jquery": "=3.2.1"
   },
   "devDependencies": {
-    "@angular/animations": "=4.4.3",
+    "@angular/animations": "4.4.6",
     "@angular/common": "=4.4.3",
     "@angular/compiler": "=4.4.3",
     "@angular/core": "=4.4.3",
