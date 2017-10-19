@@ -27,7 +27,7 @@
     "@angular/forms": "=4.4.3",
     "@angular/platform-browser": "=4.4.3",
     "@angular/platform-browser-dynamic": "=4.4.3",
-    "@angular/router": "=4.4.3",
+    "@angular/router": "4.4.6",
     "@types/jasmine": "2.5.54",
     "@types/node": "=8.0.20",
     "angular2-template-loader": "=0.6.2",
