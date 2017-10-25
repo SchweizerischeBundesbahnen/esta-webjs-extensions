@@ -29,7 +29,7 @@
     "@angular/platform-browser-dynamic": "=4.4.3",
     "@angular/router": "=4.4.3",
     "@types/jasmine": "2.5.54",
-    "@types/node": "8.0.46",
+    "@types/node": "8.0.47",
     "angular2-template-loader": "=0.6.2",
     "awesome-typescript-loader": "=3.1.2",
     "codecov": "=2.2.0",
