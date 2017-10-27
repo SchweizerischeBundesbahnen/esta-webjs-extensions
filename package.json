@@ -33,7 +33,7 @@
     "angular2-template-loader": "=0.6.2",
     "awesome-typescript-loader": "=3.1.2",
     "codecov": "=2.2.0",
-    "codelyzer": "=2.0.0",
+    "codelyzer": "3.2.2",
     "html-webpack-plugin": "=2.28.0",
     "istanbul-instrumenter-loader": "=2.0.0",
     "jasmine-core": "=2.6.3",
