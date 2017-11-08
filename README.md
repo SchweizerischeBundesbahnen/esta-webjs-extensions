@@ -1,7 +1,5 @@
 # Esta Web JS Exstentions
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/SchweizerischeBundesbahnen/esta-webjs-extensions.svg)](https://greenkeeper.io/)
-
   * [Getting started](#getting-started)
   * [Authentication module](#authentication-module)
     + [How to use the authentication module](#how-to-use-the-authentication-module)
