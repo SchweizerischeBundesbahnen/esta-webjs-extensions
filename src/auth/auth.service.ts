@@ -1,83 +1,52 @@
-/**
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2017.
- *
- * ESTA WebJS: Authentication Service for KeyCloak
- *
- * @author u218609 (Kevin Kreuzer)
- * @version: 2.0.0
- * @since 22.06.2017, 2017.
- */
-import {Injectable} from '@angular/core';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/never';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
-import {KeycloakProfile} from './keycloak-profile.model';
-import * as Keycloak from 'keycloak-js';
+import { Injectable } from '@angular/core';
+import { KeycloakInstance, KeycloakProfile } from 'keycloak-js';
+import { Observable } from 'rxjs/Observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class AuthService {
-    static keycloak: any = undefined;
-    static userProfile: BehaviorSubject<KeycloakProfile> = new BehaviorSubject(null);
 
-    public static init(options?: any, configUrl?: string): Promise<any> {
-        AuthService.keycloak = AuthService.createKeycloak(configUrl);
+  keycloak: KeycloakInstance;
 
-        return new Promise((resolve, reject) => {
-            AuthService.keycloak.init(options)
-                .success(() => {
-                    resolve();
-                })
-                .error((errorData: any) => {
-                    reject(errorData);
-                });
-        });
+  login(): void {
+    this.keycloak.login();
+  }
+
+  logout(): void {
+    this.keycloak.logout();
+  }
+
+  authenticated(): boolean {
+    return this.keycloak.authenticated;
+  }
+
+  refreshToken(minValidity: number = 5): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.keycloak.updateToken(minValidity)
+        .success(resolve)
+        .error(reject);
+    });
+  }
+
+  /**
+   * Can be used in a request header
+   * Authorization: `Bearer ${authService.getToken()}`
+   */
+  getToken(): string {
+    return this.keycloak.token;
+  }
+
+  getUserInfo(): Observable<KeycloakProfile | undefined> {
+    if (!this.authenticated() || this.keycloak.profile) {
+      return of(this.keycloak.profile);
     }
 
-    static createKeycloak(configUrl) {
-        return Keycloak(configUrl);
-    }
+    return fromPromise(new Promise((resolve, reject) => {
+      this.keycloak.loadUserProfile()
+        .success(resolve)
+        .error(err => reject(err));
+    }));
+  }
 
-    public login(): void {
-        AuthService.keycloak.login();
-    }
-
-    public logout(): void {
-        AuthService.keycloak.logout();
-    }
-
-    public authenticated(): boolean {
-        return AuthService.keycloak.authenticated;
-    }
-
-    public refreshToken(minValidity: number = 5): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            AuthService.keycloak.updateToken(minValidity)
-                .success(() => resolve(true))
-                .error((err) => reject(err));
-        });
-    }
-
-    public getToken(): string {
-        return AuthService.keycloak.token;
-    }
-
-    public getAuthHeader(): any {
-        return {
-            'Authorization': 'Bearer ' + this.getToken()
-        };
-    }
-
-    public getUserInfo(): Observable<KeycloakProfile> {
-        if (this.authenticated() && !AuthService.keycloak.profile) {
-            AuthService.keycloak.loadUserProfile()
-                .success(profile => {
-                    AuthService.userProfile.next(profile);
-                })
-                .error(err => {
-                    throw new Error(err);
-                });
-        }
-        return AuthService.userProfile.asObservable();
-    }
 }

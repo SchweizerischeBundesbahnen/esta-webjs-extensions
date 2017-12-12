@@ -7,7 +7,7 @@
 
 This project contains all extensions for esta-webjs-2.
 Currently we offer the following extensions:
-- Auehentication module
+- Authentication module
 
 ## Getting started
 To use esta-webjs-extensions you need to have node and npm installed.
@@ -22,41 +22,27 @@ The authentication module provides functionality for SSO
 with Keycloak at SBB. It provides an authentication service that you
 can use to handle all your authentication tasks.
 
+It also provides an optional interceptor ([Angular Interceptor](https://angular.io/guide/http#intercepting-all-requests-or-responses)).
+It is not contained in the authentication module but can be used
+by adding AUTH_INTERCEPTOR to the AppModule.
+
 ### How to use the authentication module
 After the redirect from the authentication server, keycloak needs to be
-notified even before Angular has started. This is why we call the init method
- of the Authservice before Angular has loaded. The init method returns
-  us a promise. After the promise is resolved or rejected we bootstrap angular
-  with our main application. Your main.ts should look like this:
+notified even before Angular has started. This is achieved by using 
+Angular App Initializers.
+
+You can import the AuthModule in your app module or in your core module.
+Use the forRoot method to provide the configuration.
+
+The keycloak configuration has to match the following interface:
 
 ```
-import './polyfills.ts';
-
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {enableProdMode} from '@angular/core';
-import {environment} from './environments/environment';
-import {AppModule} from './app/app.module';
-import {AuthService} from 'esta-webjs-extensions';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-AuthService.init({onLoad: 'check-sso'}, 'assets/auth-config.json')
-  .then(() => {
-      startAngular();
-  })
-  .catch((err) => {
-    console.warn('Error starting app with keycloak auth-service. Do you have the auth-config.json? Starting angular anyway', err);
-    startAngular();
-  });
-
-function startAngular() {
-  platformBrowserDynamic().bootstrapModule(AppModule);
+interface KeycloakConfig {
+  url?: string;
+  realm?: string;
+  clientId?: string;
 }
 ```
-
-After the set up is done you can import the Authmodule in your app module or in your core module.
 
 ```
 /**
@@ -66,24 +52,29 @@ After the set up is done you can import the Authmodule in your app module or in 
  *
  * @author u218609 (Kevin Kreuzer)
  * @version: 2.0.0
- * @since 28.04.2017, 2017.
+ * @since 11.12.2017, 2017.
  */
  ...
-import {AuthModule} from 'esta-webjs-extensions';
+import { AuthModule, AUTH_INTERCEPTOR } from 'esta-webjs-extensions';
+
+import { environment } from '../environment/environment'; // Your Angular CLI Environment config
 
 @NgModule({
   imports: [
-    AuthModule
+    AuthModule.forRoot(environment.authConfig)
+  ],
+  declarations: [...],
+  providers: [
+    AUTH_INTERCEPTOR // Optional
   ]
-  declarations: [...]
 })
 export class CoreModule {
 }
 ```
 
-By importing the Authmodule the Authservice is now available over dependency injection inside your application.
+By importing the AuthModule the AuthService is now available over dependency injection inside your application.
 ```
-import {AuthService} from 'esta-webjs-extensions';
+import { AuthService } from 'esta-webjs-extensions';
 
 @Component({
     selector: ...,
@@ -91,7 +82,7 @@ import {AuthService} from 'esta-webjs-extensions';
 })
 export class SampleComponent{
 
-    constructor(private authService: AuthService){
+    constructor(private authService: AuthService) {
     }
 }
 ```
