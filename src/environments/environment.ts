@@ -6,8 +6,8 @@
 export const environment = {
   production: false,
   authConfig: {
-    realm: 'SBB_Public',
-    url: 'https://sso-dev.sbb.ch/auth',
-    clientId: 'devportal-dev',
-  },
+    realm: 'YOUR_REALM',
+    url: 'https://YOUR_SERVER/auth',
+    clientId: 'YOUR_CLIENT_ID'
+  }
 };

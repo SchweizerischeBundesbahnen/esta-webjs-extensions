@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   authConfig: {
-    realm: 'SBB_Public',
-    url: 'https://sso.sbb.ch/auth',
-    clientId: 'devportal',
-  },
+    realm: 'YOUR_REALM',
+    url: 'https://YOUR_SERVER/auth',
+    clientId: 'YOUR_CLIENT_ID'
+  }
 };

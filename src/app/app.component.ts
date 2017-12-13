@@ -5,9 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
-  selector: 'sbb-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
   profile: Observable<KeycloakProfile>;

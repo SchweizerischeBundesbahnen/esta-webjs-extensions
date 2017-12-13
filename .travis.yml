@@ -22,10 +22,11 @@ script:
   - npm run lint
 after_success:
   - npm run test
-# Deploy must be done inside dist directory
-#deploy:
-#  provider: npm
-#  email: esta@sbb.ch
-#  api_key: ${NPM_KEY}
-#  on:
-#    tags: true
+before_deploy:
+  - cd dist
+deploy:
+  provider: npm
+  email: esta@sbb.ch
+  api_key: ${NPM_KEY}
+  on:
+    tags: true
