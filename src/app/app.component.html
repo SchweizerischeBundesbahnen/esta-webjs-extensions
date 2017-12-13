@@ -1,0 +1,9 @@
+<h1>
+  SBB Auth Test
+</h1>
+
+<div *ngIf="profile | async as info">
+  {{ info | json }}
+</div>
+
+<button (click)="test()">Login</button>

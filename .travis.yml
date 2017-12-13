@@ -22,10 +22,10 @@ script:
   - npm run lint
 after_success:
   - npm run test
-  - npm run report-coverage
-deploy:
-  provider: npm
-  email: esta@sbb.ch
-  api_key: ${NPM_KEY}
-  on:
-    tags: true
+# Deploy must be done inside dist directory
+#deploy:
+#  provider: npm
+#  email: esta@sbb.ch
+#  api_key: ${NPM_KEY}
+#  on:
+#    tags: true
