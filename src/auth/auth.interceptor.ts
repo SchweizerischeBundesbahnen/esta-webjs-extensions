@@ -1,28 +1,44 @@
-import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { ClassProvider, Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import {
+  HTTP_INTERCEPTORS,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
+} from '@angular/common/http';
+import {ClassProvider, Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {catchError} from 'rxjs/operators';
 
-import { AuthService } from './auth.service';
+import {AuthService} from './auth.service';
+
+enum HTTP_STATUS_CODE {
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403
+}
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(
-    private auth: AuthService,
-  ) { }
+  constructor(private authService: AuthService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.auth.authenticated) {
+    if (!this.authService.authenticated) {
       return next.handle(req);
     }
 
-    const token = this.auth.getToken();
-    const headers = (req.headers || new HttpHeaders())
-      .set('Authorization', `Bearer ${token}`);
-    const authReq = req.clone({ headers });
-    return next.handle(authReq);
+    return next.handle(req).pipe(catchError((error: any) => this.handleErrorResponses(error)));
   }
 
+  private handleErrorResponses(error: any): Observable<any> {
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === HTTP_STATUS_CODE.UNAUTHORIZED || error.status === HTTP_STATUS_CODE.FORBIDDEN) {
+        this.authService.login();
+      }
+    }
+    return Observable.throw(error);
+  }
 }
 
 export const AUTH_INTERCEPTOR: ClassProvider = {
