@@ -3,25 +3,26 @@ import {KeycloakInstance, KeycloakProfile} from 'keycloak-js';
 import {Observable} from 'rxjs/Observable';
 import {fromPromise} from 'rxjs/observable/fromPromise';
 import {of} from 'rxjs/observable/of';
+import {HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
 
     keycloak: KeycloakInstance;
 
-    login(): void {
+    public login(): void {
         this.keycloak.login();
     }
 
-    logout(): void {
+    public logout(): void {
         this.keycloak.logout();
     }
 
-    authenticated(): boolean {
+    public authenticated(): boolean {
         return this.keycloak.authenticated;
     }
 
-    refreshToken(minValidity: number = 5): Promise<boolean> {
+    public refreshToken(minValidity: number = 5): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.keycloak.updateToken(minValidity)
                 .success(resolve)
@@ -29,17 +30,16 @@ export class AuthService {
         });
     }
 
-    getToken(): string {
+    public getToken(): string {
         return this.keycloak.token;
     }
 
-    public getAuthHeader(): any {
-        return {
-            'Authorization': 'Bearer ' + this.getToken()
-        };
+    public getAuthHeader(): HttpHeaders {
+        const authToken = this.getToken();
+        return new HttpHeaders().set('Authorization', `Bearer ${authToken}`);
     }
 
-    getUserInfo(): Observable<KeycloakProfile | undefined> {
+    public getUserInfo(): Observable<KeycloakProfile | undefined> {
         if (!this.authenticated() || this.keycloak.profile) {
             return of(this.keycloak.profile);
         }

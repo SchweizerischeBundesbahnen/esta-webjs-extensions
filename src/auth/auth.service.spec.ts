@@ -11,6 +11,7 @@
 import {KeycloakProfile} from 'keycloak-js';
 
 import {AuthService} from './auth.service';
+import {HttpHeaders} from '@angular/common/http';
 
 describe('AuthService', () => {
 
@@ -179,9 +180,7 @@ describe('AuthService', () => {
         // given
         const sut = new AuthService();
         const authToken = 'fdsad-asdfgh-adfasg-adsfg';
-        const expectedAuthHeader = {
-            'Authorization': `Bearer ${authToken}`
-        };
+        const expectedAuthHeader = new HttpHeaders().set('Authorization', `Bearer ${authToken}`);
         spyOn(sut, 'getToken').and.returnValue(authToken);
         // when
         const authHeader = sut.getAuthHeader();
