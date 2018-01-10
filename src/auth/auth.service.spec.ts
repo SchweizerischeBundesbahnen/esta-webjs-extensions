@@ -4,134 +4,81 @@
  * ESTA WebJS: Test für den Authenticationservice
  *
  * @author u218609 (Kevin Kreuzer)
+ * @author ue88070 (Lukas Spirig)
  * @version: 2.0.0
- * @since 22.06.2017, 2017.
+ * @since 11.12.2017, 2017.
  */
+import {KeycloakProfile} from 'keycloak-js';
+
 import {AuthService} from './auth.service';
-const Keycloak = require('keycloak-js');
+import {HttpHeaders} from '@angular/common/http';
 
-describe('Auth Service', () => {
-
-    it(`should init Keycloak and return a promise which resolves when the init 
-    call with the options was successfull`, done => {
-        // given
-        const options = {};
-        const keyCloakMock = {
-            init: () => ({
-                success: callback => callback()
-            })
-        };
-        spyOn(AuthService, 'createKeycloak').and.returnValue(keyCloakMock);
-        // when
-        const promise = AuthService.init(options);
-        // then
-        promise.then(() => done(), err => fail('Promise was not resolved'));
-    });
-
-    it(`should init Keycloak and return a promise which is rejected when the init 
-    call with the options failed`, done => {
-        // given
-        const options = {};
-        const errorMessage = 'An unexpected error occured';
-        const keyCloakMock = {
-            init: () => ({
-                success: () => {
-                    return {
-                        error: callback => callback(errorMessage)
-                    };
-                },
-            })
-        };
-        spyOn(AuthService, 'createKeycloak').and.returnValue(keyCloakMock);
-        // when
-        const promise = AuthService.init(options);
-        // then
-        promise.then(
-            () => fail(),
-            err => {
-                expect(err).toBe(errorMessage);
-                done();
-            }
-        );
-    });
+describe('AuthService', () => {
 
     it('should call .login on the AuthService.keycloak on login', () => {
         // given
         const sut = new AuthService();
-        AuthService.keycloak = {
+        sut.keycloak = {
             login: () => {
             }
-        };
-        spyOn(AuthService.keycloak, 'login');
+        } as any;
+        spyOn(sut.keycloak, 'login');
         // when
         sut.login();
         // then
-        expect(AuthService.keycloak.login).toHaveBeenCalled();
+        expect(sut.keycloak.login).toHaveBeenCalled();
     });
 
     it('should call .logout on the AuthService.keycloak on logout', () => {
         // given
         const sut = new AuthService();
-        AuthService.keycloak = {
+        sut.keycloak = {
             logout: () => {
             }
-        };
-        spyOn(AuthService.keycloak, 'logout');
+        } as any;
+        spyOn(sut.keycloak, 'logout');
         // when
         sut.logout();
         // then
-        expect(AuthService.keycloak.logout).toHaveBeenCalled();
+        expect(sut.keycloak.logout).toHaveBeenCalled();
     });
 
-    it(`should return the value of .authenticated on the EstaAuthService.keycloak 
+    it(`should return the value of .authenticated on the EstaAuthService.keycloak
     when we call authenticated`, () => {
         // given
         const sut = new AuthService();
-        AuthService.keycloak = {
+        sut.keycloak = {
             authenticated: true
-        };
+        } as any;
         // when
         const isAuthenticated = sut.authenticated();
         // then
         expect(isAuthenticated).toBeTruthy();
     });
 
-    it(`should return the value .token on the EstaAuthService.keycloak 
+    it(`should return the value .token on the EstaAuthService.keycloak
     when we call getToken`, () => {
         // given
         const sut = new AuthService();
         const expectedToken = '123-456-789';
-        AuthService.keycloak = {token: expectedToken};
+        sut.keycloak = {token: expectedToken} as any;
         // when
         const token = sut.getToken();
         // then
         expect(token).toBe(expectedToken);
     });
 
-    it('should return the AuthHeader when we call getAuthHeader', () => {
-        // given
-        const sut = new AuthService();
-        const token = '123-456-789';
-        spyOn(sut, 'getToken').and.returnValue(token);
-        // when
-        const authHeader = sut.getAuthHeader();
-        // then
-        expect(authHeader).toEqual({
-            'Authorization': `Bearer ${token}`
-        });
-    });
-
-    it(`should return a promise when we call refreshToken. This promise must be 
+    it(`should return a promise when we call refreshToken. This promise must be
         resolved when the refresh was successfull`, done => {
         // given
         const sut = new AuthService();
         const minValidity = 5;
         const keyCloakMock = {
             updateToken: () => ({
-                success: callback => callback()
+                success: callback => callback(true)
             })
         };
-        AuthService.keycloak = keyCloakMock;
+        sut.keycloak = keyCloakMock as any;
         // when
         const promise = sut.refreshToken(minValidity);
         // then
@@ -143,7 +90,7 @@ describe('Auth Service', () => {
         );
     });
 
-    it(`should return a promise when we call refreshToken. This promise must be 
+    it(`should return a promise when we call refreshToken. This promise must be
         rejected when an error during refresh occured`, done => {
         // given
         const sut = new AuthService();
@@ -156,7 +103,7 @@ describe('Auth Service', () => {
                 })
             })
         };
-        AuthService.keycloak = keyCloakMock;
+        sut.keycloak = keyCloakMock as any;
         // when
         const promise = sut.refreshToken(minValidity);
         // then
@@ -171,18 +118,14 @@ describe('Auth Service', () => {
     it(`should return an Observable that streams the userprofile`, () => {
         // given
         const sut = new AuthService();
-        const userprofile = {
+        const profile = {
             firstname: 'Ruffy',
             name: 'Monkey D'
-        };
-        AuthService.userProfile.next(userprofile);
+        } as KeycloakProfile;
+        sut.keycloak = {profile} as any;
         spyOn(sut, 'authenticated').and.returnValue(false);
-        // when
-        const userprofile$ = sut.getUserInfo();
-        // then
-        userprofile$.subscribe(
-            profile => expect(profile).toEqual(userprofile)
-        );
+        sut.getUserInfo()
+            .subscribe(p => expect(p).toEqual(profile));
     });
 
     it(`should load the userprofile if the user is authenticated and Keycloak has no profile yet.
@@ -192,9 +135,9 @@ describe('Auth Service', () => {
         const userprofile = {
             firstname: 'Ruffy',
             name: 'Monkey D'
-        };
-        AuthService.keycloak = {
-            profile: false,
+        } as Keycloak.KeycloakProfile;
+        sut.keycloak = {
+            profile: undefined,
             loadUserProfile: () => ({
                 success: callback => {
                     callback(userprofile);
@@ -204,14 +147,10 @@ describe('Auth Service', () => {
                     };
                 }
             })
-        };
+        } as any;
         spyOn(sut, 'authenticated').and.returnValue(true);
-        // when
-        const userprofile$ = sut.getUserInfo();
-        // then
-        userprofile$.subscribe(
-            profile => expect(profile).toEqual(userprofile)
-        );
+        sut.getUserInfo()
+            .subscribe(profile => expect(profile).toEqual(userprofile));
     });
 
     it(`should load the userprofile if the user is authenticated and Keycloak has no profile yet.
@@ -219,16 +158,33 @@ describe('Auth Service', () => {
         // given
         const sut = new AuthService();
         const errorMessage = 'An error occured while loading the profile';
-        AuthService.keycloak = {
+        sut.keycloak = {
             profile: false,
             loadUserProfile: () => ({
                 success: () => ({
                     error: errorCallback => errorCallback(errorMessage)
                 })
             })
-        };
+        } as any;
         spyOn(sut, 'authenticated').and.returnValue(true);
         // when - then
-        expect(() => sut.getUserInfo()).toThrowError(errorMessage);
+        sut.getUserInfo()
+            .subscribe(
+                p => {
+                    throw new Error('Unexpected!');
+                },
+                e => expect(e).toEqual(errorMessage));
+    });
+
+    it('must return the AuthHeader with the token', () => {
+        // given
+        const sut = new AuthService();
+        const authToken = 'fdsad-asdfgh-adfasg-adsfg';
+        const expectedAuthHeader = new HttpHeaders().set('Authorization', `Bearer ${authToken}`);
+        spyOn(sut, 'getToken').and.returnValue(authToken);
+        // when
+        const authHeader = sut.getAuthHeader();
+        // then
+        expect(authHeader).toEqual(expectedAuthHeader);
     });
 });

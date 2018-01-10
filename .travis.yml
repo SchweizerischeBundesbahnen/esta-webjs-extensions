@@ -22,7 +22,8 @@ script:
   - npm run lint
 after_success:
   - npm run test
-  - npm run report-coverage
+before_deploy:
+  - cd dist
 deploy:
   provider: npm
   email: esta@sbb.ch

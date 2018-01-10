@@ -7,7 +7,7 @@
 
 This project contains all extensions for esta-webjs-2.
 Currently we offer the following extensions:
-- Auehentication module
+- Authentication module
 
 ## Getting started
 To use esta-webjs-extensions you need to have node and npm installed.
@@ -19,44 +19,30 @@ npm install --save esta-webjs-extensions
 
 ## Authentication Module
 The authentication module provides functionality for SSO
-with Keycloak at SBB. It provides an authentication service that you
+with Keycloak. It provides an authentication service that you
 can use to handle all your authentication tasks.
+
+It also provides an optional interceptor ([Angular Interceptor](https://angular.io/guide/http#intercepting-all-requests-or-responses)).
+It is not contained in the authentication module but can be used
+by adding AUTH_INTERCEPTOR to the AppModule.
 
 ### How to use the authentication module
 After the redirect from the authentication server, keycloak needs to be
-notified even before Angular has started. This is why we call the init method
- of the Authservice before Angular has loaded. The init method returns
-  us a promise. After the promise is resolved or rejected we bootstrap angular
-  with our main application. Your main.ts should look like this:
+notified even before Angular has started. This is achieved by using 
+Angular App Initializers.
+
+You can import the AuthModule in your app module or in your core module.
+Use the forRoot method to provide the configuration.
+
+The keycloak configuration has to match the following interface:
 
 ```
-import './polyfills.ts';
-
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {enableProdMode} from '@angular/core';
-import {environment} from './environments/environment';
-import {AppModule} from './app/app.module';
-import {AuthService} from 'esta-webjs-extensions';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-AuthService.init({onLoad: 'check-sso'}, 'assets/auth-config.json')
-  .then(() => {
-      startAngular();
-  })
-  .catch((err) => {
-    console.warn('Error starting app with keycloak auth-service. Do you have the auth-config.json? Starting angular anyway', err);
-    startAngular();
-  });
-
-function startAngular() {
-  platformBrowserDynamic().bootstrapModule(AppModule);
+interface KeycloakConfig {
+  url?: string;
+  realm?: string;
+  clientId?: string;
 }
 ```
-
-After the set up is done you can import the Authmodule in your app module or in your core module.
 
 ```
 /**
@@ -66,24 +52,29 @@ After the set up is done you can import the Authmodule in your app module or in 
  *
  * @author u218609 (Kevin Kreuzer)
  * @version: 2.0.0
- * @since 28.04.2017, 2017.
+ * @since 11.12.2017, 2017.
  */
  ...
-import {AuthModule} from 'esta-webjs-extensions';
+import { AuthModule, AUTH_INTERCEPTOR } from 'esta-webjs-extensions';
+
+import { environment } from '../environment/environment'; // Your Angular CLI Environment config
 
 @NgModule({
   imports: [
-    AuthModule
+    AuthModule.forRoot(environment.authConfig)
+  ],
+  declarations: [...],
+  providers: [
+    AUTH_INTERCEPTOR // Optional
   ]
-  declarations: [...]
 })
 export class CoreModule {
 }
 ```
 
-By importing the Authmodule the Authservice is now available over dependency injection inside your application.
+By importing the AuthModule the AuthService is now available over dependency injection inside your application.
 ```
-import {AuthService} from 'esta-webjs-extensions';
+import { AuthService } from 'esta-webjs-extensions';
 
 @Component({
     selector: ...,
@@ -91,7 +82,7 @@ import {AuthService} from 'esta-webjs-extensions';
 })
 export class SampleComponent{
 
-    constructor(private authService: AuthService){
+    constructor(private authService: AuthService) {
     }
 }
 ```
@@ -102,10 +93,10 @@ the authentication module.
 
 | Method                                   	| Description                                                                                                                                                                                                                                                                                                                                                                                                 	|
 |------------------------------------------	|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| login: void                              	| When you call this method you are redirected to the authentication server where you need to enter your credentials. After a successfull login you are then redirect to your app. The AuthModule then internally stores the authorization token. This token is stored persistent. It is also available after a window refresh. You can get the token by calling the getToken() method of the auth service.   	|
+| login: void                              	| When you call this method you are redirected to the authentication server where you need to enter your credentials. After a successful login you are then redirect to your app. The AuthModule then internally stores the authorization token. This token is stored persistent. It is also available after a window refresh. You can get the token by calling the getToken() method of the auth service.   	|
 | getToken: string                         	| This method returns the stored token. Notice that it only returns the token and not the complete authHeader. To get the authHeader you can use the getAuthHeader() method on the authService.                                                                                                                                                                                                               	|
 | getAuthHeader: any                       	| This method returns an auth header object. This auth header object has an authorization property that contains Bearer + token as value.                                                                                                                                                                                                                                                                     	|
-| refreshToken: Promise<boolean>           	| This method allows you to refresh the token. It returns a promise that indicates if the refresh has been successfull or not. Don't forget to call getToken() again to get the refreshed token.                                                                                                                                                                                                              	|
+| refreshToken: Promise<boolean>           	| This method allows you to refresh the token. It returns a promise that indicates if the refresh has been successful or not. Don't forget to call getToken() again to get the refreshed token.                                                                                                                                                                                                              	|
 | getUserInfo: Observable<KeycloakProfile> 	| This method returns you an Observable who streams the user profile. This user profile has the following structure. - id?: string - username?: string - email?: string - firstName?: string - lastName?: string - enabled?: boolean - emailVerified?: boolean - totp?: boolean - createdTimestamp?: number                                                                                                   	|
-| authenticated: boolean                   	| Returns a boolean that identicates if the user is authenticated or not.                                                                                                                                                                                                                                                                                                                                     	|
+| authenticated: boolean                   	| Returns a boolean that indicates if the user is authenticated or not.                                                                                                                                                                                                                                                                                                                                     	|
 | logout: void                             	| logout: voidThis method will logout the current user and remove the token from the auth module.                                                                                                                                                                                                                                                                                                             	|
