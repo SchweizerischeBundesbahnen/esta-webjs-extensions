@@ -31,3 +31,4 @@ deploy:
   api_key: ${NPM_KEY}
   on:
     tags: true
+  skip_cleanup: true
