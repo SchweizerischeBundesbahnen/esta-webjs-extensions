@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {KeycloakInstance, KeycloakProfile} from 'keycloak-js';
+import {KeycloakInstance, KeycloakLoginOptions, KeycloakProfile} from 'keycloak-js';
 import {Observable} from 'rxjs/Observable';
 import {fromPromise} from 'rxjs/observable/fromPromise';
 import {of} from 'rxjs/observable/of';
@@ -10,12 +10,12 @@ export class AuthService {
 
     keycloak: KeycloakInstance;
 
-    public login(): void {
-        this.keycloak.login();
+    public login(options?: KeycloakLoginOptions): void {
+        this.keycloak.login(options);
     }
 
-    public logout(): void {
-        this.keycloak.logout();
+    public logout(options?: any): void {
+        this.keycloak.logout(options);
     }
 
     public authenticated(): boolean {
