@@ -81,6 +81,14 @@
   border-color: $sbb-black-100;
 }
 
+.ui-radiobutton-label{
+    margin-bottom: 0px;
+}
+
+.ui-radiobutton-box {
+    font-size: 16px;
+}
+
 .ui-slider {
   background: $sbb-black-40;
   border: none;
