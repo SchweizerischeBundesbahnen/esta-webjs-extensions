@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'esta-webjs-extensions';
 import { KeycloakProfile } from 'keycloak-js';
-import { Observable } from 'rxjs/Observable';
-
-import { AuthService } from '../auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',

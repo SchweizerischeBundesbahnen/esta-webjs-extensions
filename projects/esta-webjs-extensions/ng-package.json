@@ -1,0 +1,9 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/esta-webjs-extensions",
+  "deleteDestPath": false,
+  "whitelistedNonPeerDependencies": ["bootstrap", "keycloak-js", "primeng"],
+  "lib": {
+    "entryFile": "src/public_api.ts"
+  }
+}
