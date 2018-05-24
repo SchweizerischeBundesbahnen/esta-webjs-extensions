@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private handleErrorResponses(error: any): Observable<any> | Promise<any> {
     return !this.authService.authenticated()
       && error instanceof HttpErrorResponse
-      && [HttpStatusCode.UNAUTHORIZED, HttpStatusCode.FORBIDDEN].includes(error.status)
+      && [HttpStatusCode.UNAUTHORIZED, HttpStatusCode.FORBIDDEN].indexOf(error.status) >= 0
       ? this.authService.login()
       : throwError(error);
   }

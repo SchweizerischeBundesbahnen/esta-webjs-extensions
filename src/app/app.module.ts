@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { AUTH_INTERCEPTOR, AuthModule } from 'esta-webjs-extensions';
 
-import { AUTH_INTERCEPTOR } from '../auth/auth.interceptor';
-import { AuthModule } from '../auth/auth.module';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 

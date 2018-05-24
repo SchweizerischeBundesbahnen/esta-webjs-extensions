@@ -23,7 +23,7 @@ script:
 after_success:
   - npm run test
 before_deploy:
-  - cd dist
+  - cd dist/esta-webjs-extensions
 deploy:
   provider: npm
   email: esta@sbb.ch

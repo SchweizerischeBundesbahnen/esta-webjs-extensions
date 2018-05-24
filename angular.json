@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "esta-webjs-estensions": {
+    "esta-webjs-extensions-demo": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -11,7 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -115,9 +115,49 @@
           }
         }
       }
+    },
+    "esta-webjs-extensions": {
+      "root": "projects/esta-webjs-extensions",
+      "sourceRoot": "projects/esta-webjs-extensions/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/esta-webjs-extensions/tsconfig.lib.json",
+            "project": "projects/esta-webjs-extensions/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/esta-webjs-extensions/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/esta-webjs-extensions/src/test.ts",
+            "tsConfig": "projects/esta-webjs-extensions/tsconfig.spec.json",
+            "karmaConfig": "projects/esta-webjs-extensions/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/esta-webjs-extensions/tsconfig.lib.json",
+              "projects/esta-webjs-extensions/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
-  "defaultProject": "esta-webjs-estensions",
+  "defaultProject": "esta-webjs-extensions-demo",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "sbb",
