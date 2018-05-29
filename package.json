@@ -11,11 +11,13 @@
     "lint": "ng lint --type-check"
   },
   "private": false,
-  "peerDependencies": {
+  "dependencies": {
     "keycloak-js": "^3.4.0",
     "bootstrap": "=4.1.1",
+    "primeng": "=6.0.0-alpha.1"
+  },
+  "peerDependencies": {
     "@angular/core": "=6.0.3",
-    "primeng": "=6.0.0-alpha.1",
     "rxjs": "=6.2.0"
   },
   "devDependencies": {
