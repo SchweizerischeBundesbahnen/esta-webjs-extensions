@@ -8,17 +8,14 @@
     "build": "ng-packagr -p ng-package.json",
     "postbuild": "copyup src/styles/*.scss dist",
     "test": "ng test --progress false -sr -cc --browsers ChromiumHeadless",
-    "lint": "ng lint --type-check",
-    "e2e": "ng e2e"
+    "lint": "ng lint --type-check"
   },
   "private": false,
-  "dependencies": {
-    "bootstrap": "=4.1.1",
-    "keycloak-js": "^3.4.0",
-    "primeng": "=6.0.0-alpha.1"
-  },
   "peerDependencies": {
+    "keycloak-js": "^3.4.0",
+    "bootstrap": "=4.1.1",
     "@angular/core": "=6.0.3",
+    "primeng": "=6.0.0-alpha.1",
     "rxjs": "=6.2.0"
   },
   "devDependencies": {
