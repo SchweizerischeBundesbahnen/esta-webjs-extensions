@@ -9,7 +9,7 @@ import {KeycloakConfig} from './keycloak-config';
 @NgModule()
 export class AuthModule {
     static forRoot(config: string | KeycloakConfig,
-                   options: KeycloakInitOptions = {onLoad: 'check-sso'}): ModuleWithProviders {
+                   options: KeycloakInitOptions = {onLoad: 'check-sso', flow: 'implicit'}): ModuleWithProviders {
         return {
             ngModule: AuthModule,
             providers: [

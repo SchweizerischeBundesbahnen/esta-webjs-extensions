@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {KeycloakInstance, KeycloakLoginOptions, KeycloakProfile} from 'keycloak-js';
-import {Observable} from 'rxjs/Observable';
-import {fromPromise} from 'rxjs/observable/fromPromise';
-import {of} from 'rxjs/observable/of';
+import {from, Observable, of} from 'rxjs';
 import {HttpHeaders} from '@angular/common/http';
 
 @Injectable()
@@ -44,7 +42,7 @@ export class AuthService {
             return of(this.keycloak.profile);
         }
 
-        return fromPromise(new Promise((resolve, reject) => {
+        return from(new Promise((resolve, reject) => {
             this.keycloak.loadUserProfile()
                 .success(resolve)
                 .error(err => reject(err));
