@@ -3,7 +3,7 @@ sudo: required
 language: node_js
 
 node_js:
-  - "6"
+  - "8"
 os:
   - linux
 addons:
@@ -20,6 +20,7 @@ install:
   - npm install
 script:
   - npm run lint
+  - npm run build
 after_success:
   - npm run test
 before_deploy:
@@ -30,3 +31,4 @@ deploy:
   api_key: ${NPM_KEY}
   on:
     tags: true
+  skip_cleanup: true
