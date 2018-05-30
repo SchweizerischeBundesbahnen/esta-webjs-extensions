@@ -7,8 +7,7 @@ import {
     HttpRequest
 } from '@angular/common/http';
 import {ClassProvider, Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
+import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
 import {AuthService} from './auth.service';
@@ -37,7 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.authService.login();
             }
         }
-        return ErrorObservable.create(error);
+        return throwError(error);
     }
 }
 

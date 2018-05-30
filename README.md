@@ -45,15 +45,6 @@ interface KeycloakConfig {
 ```
 
 ```
-/**
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2017.
- *
- * ESTA WebJS: Core Module
- *
- * @author u218609 (Kevin Kreuzer)
- * @version: 2.0.0
- * @since 11.12.2017, 2017.
- */
  ...
 import { AuthModule, AUTH_INTERCEPTOR } from 'esta-webjs-extensions';
 
@@ -93,10 +84,10 @@ the authentication module.
 
 | Method                                   	| Description                                                                                                                                                                                                                                                                                                                                                                                                 	|
 |------------------------------------------	|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| login: void                              	| When you call this method you are redirected to the authentication server where you need to enter your credentials. After a successful login you are then redirect to your app. The AuthModule then internally stores the authorization token. This token is stored persistent. It is also available after a window refresh. You can get the token by calling the getToken() method of the auth service.   	|
+| login: Promise<void>                     	| When you call this method you are redirected to the authentication server where you need to enter your credentials. After a successful login you are then redirect to your app. The AuthModule then internally stores the authorization token. This token is stored persistent. It is also available after a window refresh. You can get the token by calling the getToken() method of the auth service.   	|
 | getToken: string                         	| This method returns the stored token. Notice that it only returns the token and not the complete authHeader. To get the authHeader you can use the getAuthHeader() method on the authService.                                                                                                                                                                                                               	|
 | getAuthHeader: any                       	| This method returns an auth header object. This auth header object has an authorization property that contains Bearer + token as value.                                                                                                                                                                                                                                                                     	|
 | refreshToken: Promise<boolean>           	| This method allows you to refresh the token. It returns a promise that indicates if the refresh has been successful or not. Don't forget to call getToken() again to get the refreshed token.                                                                                                                                                                                                              	|
 | getUserInfo: Observable<KeycloakProfile> 	| This method returns you an Observable who streams the user profile. This user profile has the following structure. - id?: string - username?: string - email?: string - firstName?: string - lastName?: string - enabled?: boolean - emailVerified?: boolean - totp?: boolean - createdTimestamp?: number                                                                                                   	|
 | authenticated: boolean                   	| Returns a boolean that indicates if the user is authenticated or not.                                                                                                                                                                                                                                                                                                                                     	|
-| logout: void                             	| logout: voidThis method will logout the current user and remove the token from the auth module.                                                                                                                                                                                                                                                                                                             	|
+| logout: Promise<void>                    	| logout: voidThis method will logout the current user and remove the token from the auth module.                                                                                                                                                                                                                                                                                                             	|
