@@ -45,15 +45,6 @@ interface KeycloakConfig {
 ```
 
 ```
-/**
- * Copyright (C) Schweizerische Bundesbahnen SBB, 2017.
- *
- * ESTA WebJS: Core Module
- *
- * @author u218609 (Kevin Kreuzer)
- * @version: 3.0.0
- * @since 24.05.2018, 2017.
- */
  ...
 import { AuthModule, AUTH_INTERCEPTOR } from 'esta-webjs-extensions';
 
