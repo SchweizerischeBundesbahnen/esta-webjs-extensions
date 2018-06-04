@@ -1,15 +1,22 @@
 import { HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { KeycloakInstance, KeycloakLoginOptions, KeycloakProfile } from 'keycloak-js';
 import { from, Observable, of } from 'rxjs';
+
+import { KEYCLOAK_LOGIN_OPTIONS } from './auth.tokens';
 
 @Injectable()
 export class AuthService {
 
   keycloak: KeycloakInstance;
 
+  constructor(
+    @Inject(KEYCLOAK_LOGIN_OPTIONS) @Optional() private loginOptions: KeycloakLoginOptions = {},
+  ) { }
+
   login(options?: KeycloakLoginOptions): Promise<void> {
-    return this.toNativePromise(this.keycloak.login(options));
+    const loginOptions = Object.assign({}, this.loginOptions, options);
+    return this.toNativePromise(this.keycloak.login(loginOptions));
   }
 
   logout(options?: any): Promise<void> {
