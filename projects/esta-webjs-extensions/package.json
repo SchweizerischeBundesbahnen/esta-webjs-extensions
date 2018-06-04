@@ -5,7 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0",
     "keycloak-js": "^3.4.3",
-    "primeng": "^5.2.7"
+    "primeng": "^6.0.0-alpha.2"
   },
   "peerDependencies": {
     "@angular/common": "^6.0.0",
@@ -20,7 +20,7 @@
     "ESTA"
   ],
   "author": "Reto Lehmann <reto.lehmann@sbb.ch>",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/SchweizerischeBundesbahnen/esta-webjs-extensions/issues"
   },
