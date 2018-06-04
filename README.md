@@ -78,6 +78,24 @@ export class SampleComponent{
 }
 ```
 
+### Authentication Module
+The Authentication Module provides the authentication service.
+It exposes the static forRoot method to configure authentication.
+
+```
+AuthModule.forRoot(
+  config: string | KeycloakConfig,
+  options?: KeycloakInitOptions,
+  loginOptions?: KeycloakLoginOptions)
+```
+
+| Parameter | Description                                                         |
+| --------- | ------------------------------------------------------------------- |
+| config    | **Required** Either a configuration object or an url where the configuration is provided in json format |
+| options   | **Optional** Options object (default is { onLoad: 'check-sso', flow: 'implicit' }) |
+| loginOptions | **Optional** Login options object, which will be used on AuthService.login (default is { idpHint: 'adfs_sbb_prod' }) |
+
+
 ### Authentication Service
 The Authentication Service provides the necessary API to interact with
 the authentication module.
