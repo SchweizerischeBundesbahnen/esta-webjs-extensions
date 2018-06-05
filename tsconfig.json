@@ -15,6 +15,11 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "esta-webjs-extensions": [
+        "dist/esta-webjs-extensions"
+      ]
+    }
   }
 }

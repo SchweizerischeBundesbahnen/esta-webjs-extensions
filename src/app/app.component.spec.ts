@@ -1,6 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
+import { AuthModule } from 'esta-webjs-extensions';
 
-import { AuthModule } from '../auth/auth.module';
 import { environment } from '../environments/environment.prod';
 import { AppComponent } from './app.component';
 
