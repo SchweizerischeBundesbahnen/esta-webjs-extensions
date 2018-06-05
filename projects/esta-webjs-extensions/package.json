@@ -1,0 +1,28 @@
+{
+  "name": "esta-webjs-extensions",
+  "version": "3.0.0",
+  "description": "Extension modules for ESTA WebJS",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "keycloak-js": "^3.4.3",
+    "primeng": "^6.0.0-alpha.2"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "rxjs": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SchweizerischeBundesbahnen/esta-webjs-extensions.git"
+  },
+  "keywords": [
+    "ESTA"
+  ],
+  "author": "Reto Lehmann <reto.lehmann@sbb.ch>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/SchweizerischeBundesbahnen/esta-webjs-extensions/issues"
+  },
+  "homepage": "https://github.com/SchweizerischeBundesbahnen/esta-webjs-extensions#readme"
+}
