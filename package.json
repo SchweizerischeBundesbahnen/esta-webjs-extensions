@@ -1,6 +1,6 @@
 {
   "name": "esta-webjs-extensions",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Extension modules for ESTA WebJS",
   "scripts": {
     "ng": "ng",
