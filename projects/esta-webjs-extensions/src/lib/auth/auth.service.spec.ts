@@ -15,30 +15,28 @@ import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
 
-  it('should call .login on the AuthService.keycloak on login', () => {
+  it('should call .login on the AuthService.keycloak on login', async () => {
     // given
     const sut = new AuthService();
     sut.keycloak = {
-      login: () => {
-      }
+      login: () => ({ success: () => ({ error: () => { } }) })
     } as any;
     spyOn(sut.keycloak, 'login');
     // when
-    sut.login();
+    await sut.login();
     // then
     expect(sut.keycloak.login).toHaveBeenCalled();
   });
 
-  it('should call .logout on the AuthService.keycloak on logout', () => {
+  it('should call .logout on the AuthService.keycloak on logout', async () => {
     // given
     const sut = new AuthService();
     sut.keycloak = {
-      logout: () => {
-      }
+      logout: () => ({ success: () => ({ error: () => { } }) })
     } as any;
     spyOn(sut.keycloak, 'logout');
     // when
-    sut.logout();
+    await sut.logout();
     // then
     expect(sut.keycloak.logout).toHaveBeenCalled();
   });
