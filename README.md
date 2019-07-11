@@ -1,3 +1,10 @@
+# Deprecation Notice :warning:
+This repository is being deprecated.  
+The Authentication code has been moved to https://github.com/SchweizerischeBundesbahnen/sbb-angular/tree/master/projects/sbb-esta/angular-keycloak  
+It is now part of the [sbb-angular](https://github.com/SchweizerischeBundesbahnen/sbb-angular) monorepo.  
+The new npm package can be found at [@sbb-esta/angular-keycloak](https://www.npmjs.com/package/@sbb-esta/angular-keycloak).  
+At a later date the old npm package will be deprecated and this repository removed.  
+
 # Esta Web JS Exstentions
 
   * [Getting started](#getting-started)
